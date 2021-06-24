@@ -34,6 +34,7 @@
 }
 
 .password{
+    margin-top: 20px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -45,11 +46,35 @@
     width: 48%;
 }
 
-.linepasswrd{
-    margin-top: 5px;
+.linepasswrd {
     font-size: 12px;
+    margin-top: 5px;
     color:  #5f6368;
     font-family:roboto,'Noto Sans Myanmar UI',arial,sans-serif;
+}
+.mailinstead{
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+    color: blue;
+    padding: 10px 0;
+}
+.signininstead{
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+    color: blue;
+    padding: 10px 0;
+}
+.text-link:hover
+{
+    color:#2f3d96;
+    background-color: #ced8f852;
+
+}
+.text-link 
+.sigin-link{
+    padding: 5% 0 10%;
 }
 .check{
     margin-top: 20px;
@@ -113,8 +138,7 @@ width: auto;
 }
 
 .form{
-   
-    margin-top: 20px;
+   margin-top: 20px;
     display: flex;
     align-items: flex-start;
     flex-direction: column;
@@ -127,7 +151,7 @@ width: auto;
 }
 
 .nextbtn{
-    margin-left: 200px;
+    margin-left: 100px;
 }
 .section2{
     padding-left: 48px;
