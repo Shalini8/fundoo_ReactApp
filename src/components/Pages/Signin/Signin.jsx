@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import TextField from '@material-ui/core/TextField';
 import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
-import '../components/Login.css'
-import '../components/Signin.css'
+import '../Login/Login.css'
+import '../Signin/Signin.css'
 
 export class Signin extends Component {
     constructor(props) {

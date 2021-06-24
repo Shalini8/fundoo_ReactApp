@@ -2,10 +2,10 @@ import React, { Component } from 'react'
 import TextField from '@material-ui/core/TextField';
 import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
-import '../components/Login.css'
+import '../Login/Login.css'
 import { InputAdornment } from '@material-ui/core';
 
-export class Fundoo extends Component {
+export class Login extends Component {
     constructor(props) {
         super(props)
 
@@ -96,5 +96,5 @@ export class Fundoo extends Component {
 }
 
 
-export default Fundoo
+export default Login
 

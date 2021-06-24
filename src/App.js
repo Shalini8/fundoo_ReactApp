@@ -1,12 +1,12 @@
 import logo from './logo.svg';
 import './App.css';
-import Fundoo from './components/Fundoo';
-import Signin from './components/Signin'
+import Login from './components/Pages/Login/Login';
+import Signin from './components/Pages/Signin/Signin';
 
 function App() {
   return (
     <div className="App">
-      <Fundoo/>
+      <Login/>
       <Signin/>
     </div>
   );

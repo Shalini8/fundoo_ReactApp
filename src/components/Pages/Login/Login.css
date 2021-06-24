@@ -10,11 +10,15 @@
     height: auto;
     display: flex;
     flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    
 }
 .name{
     margin-top: 20px;
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     justify-content: space-between;
 }
 .fname{
