@@ -10,9 +10,33 @@ export class Signin extends Component {
         super(props)
 
         this.state = {
+            username:'',
+            usernameError: false
 
         }
     }
+    changeHandler = (e) => {
+        this.setState({
+            [e.target.name]: e.target.value,
+        })
+    }
+    validation = () => {
+        let isError = false;
+        const error = this.state;
+        error.usernameError = this.state.username === '' ? true : false;
+        this.setState({
+            ...error
+        })
+
+        return isError = error.usernameError;
+    }
+    Next = () => {
+        var validated = this.validation();
+        if (validated) {
+            console.log("successfull validation ")
+        }
+    }
+
 
 
     render() {
@@ -27,10 +51,14 @@ export class Signin extends Component {
                     <div className="form">
                     <div className="email1">
                         <TextField
+                            name="username"
+                            error={this.state.usernameError}
                             id="outlined-basic4"
                             className="email1"
                             label="Email or Phone"
+                            helperText={this.state.usernameError ? "Enter an email or phone number " : ''}
                             variant="outlined"
+                            onChange={e => this.changeHandler(e)}
                         /><br></br><br></br>
                     </div>
                     <div className="forgotemail-link">
@@ -53,7 +81,7 @@ export class Signin extends Component {
 
                     </div>
                         <div className="nextbtn">
-                            <Button variant="contained" className="next" color="primary" href="#contained-buttons">
+                            <Button variant="contained" className="next" color="primary" href="#contained-buttons"onClick={this.Next}>
                                 Next
                             </Button>
                         </div>
