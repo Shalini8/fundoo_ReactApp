@@ -6,7 +6,7 @@ import Signin from './components/Pages/Signin/Signin';
 function App() {
   return (
     <div className="App">
-      <Login/>
+      {/* <Login/> */}
       <Signin/>
     </div>
   );

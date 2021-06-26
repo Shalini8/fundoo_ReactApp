@@ -42,7 +42,7 @@ export class Signin extends Component {
     render() {
         return (
             <div className = "signin-container">
-                <div className="fundoo-sign">
+                <div className="fundoo fundoo-sign">
                         <span className="letterF">F</span>
                         <span className="letteru">u</span><span className="lettern">n</span><span className="letterd">d</span><span className="letterO">o</span><span className="lettero">o</span>
                     </div>
@@ -70,14 +70,14 @@ export class Signin extends Component {
                         <span>Not your computer? Use Guest mode to sign in privately.</span>
 
                         <div className="text-link">
-                        <a className="mailinstead" href="#outlined-basic3">Learn More</a>
+                        <a className="mailinstead" href="https://support.google.com/chrome/answer/6130773?hl=en">Learn More</a>
                         </div>
                         </div>
                         </div>
 
                     <div className="lastsec">
                     <div className="signin-link">
-                        <a className="signininstead" href="'./components/Signin'">Create account</a>
+                        <a className="signininstead" href="../components/Pages/Signin/Signin.jsx">Create account</a>
 
                     </div>
                         <div className="nextbtn">

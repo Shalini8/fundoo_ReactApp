@@ -12,11 +12,11 @@ export class Login extends Component {
         this.state = {
             fName: '',
             lName: '',
-            email:'',
-            password:'',
-            confirm:'',
+            email: '',
+            password: '',
+            confirm: '',
             emailError: false,
-            passwordError: false, 
+            passwordError: false,
             confirmError: false,
             fNameError: false,
             lNameError: false
@@ -31,26 +31,26 @@ export class Login extends Component {
     validation = () => {
         let isError = false;
         const error = this.state;
-        error.fNameError= this.state.fName === ''? true : false;
-        error.lNameError= this.state.lName === ''? true : false;
-        error.emailError= this.state.email === ''? true : false;
-        error.passwordError= this.state.password === ''? true : false;
-        error.confirmError= this.state.confirm === ''? true : false;
+        error.fNameError = this.state.fName === '' ? true : false;
+        error.lNameError = this.state.lName === '' ? true : false;
+        error.emailError = this.state.email === '' ? true : false;
+        error.passwordError = this.state.password === '' ? true : false;
+        error.confirmError = this.state.confirm === '' ? true : false;
 
         this.setState({
             ...error
         })
 
-        return isError= error.fNameError || error.lNameError || error.emailError || error.confirmError || error.passwordError;
-    
+        return isError = error.fNameError || error.lNameError || error.emailError || error.confirmError || error.passwordError;
+
 
     }
 
     Next = () => {
-       var validated = this.validation();
-       if(validated){
-           console.log("successfull validation ")
-       }
+        var validated = this.validation();
+        if (validated) {
+            console.log("successfull validation ")
+        }
     }
 
 
@@ -68,8 +68,8 @@ export class Login extends Component {
                     <img src="" alt="" />
 
                     <div className="name" >
-                        <TextField name="fName" error={this.state.fNameError}  className="fname" label="First name" helperText={this.state.fNameError? "Enter First name " : ''} variant="outlined"  onChange={e => this.changeHandler(e)} />
-                        <TextField name="lName" error={this.state.lNameError}  className="lname" label="Last name" helperText={this.state.lNameError? "Enter Last name " : ''}  variant="outlined" onChange={e => this.changeHandler(e)}/>
+                        <TextField name="fName" error={this.state.fNameError} className="fname" label="First name" helperText={this.state.fNameError ? "Enter First name " : ''} variant="outlined" onChange={e => this.changeHandler(e)} />
+                        <TextField name="lName" error={this.state.lNameError} className="lname" label="Last name" helperText={this.state.lNameError ? "Enter Last name " : ''} variant="outlined" onChange={e => this.changeHandler(e)} />
                     </div>
                     <div className="email1">
                         <TextField
@@ -84,9 +84,9 @@ export class Login extends Component {
                                 ),
                             }}
 
-                            helperText={this.state.emailError? "Choose a gmail address " : "you can use use letters, number & periods"}
+                            helperText={this.state.emailError ? "Choose a gmail address " : "you can use use letters, number & periods"}
                             variant="outlined"
-                            onChange={e => this.changeHandler(e)} 
+                            onChange={e => this.changeHandler(e)}
                         /><br></br><br></br>
                     </div>
                     <div className="text-link">
@@ -103,18 +103,21 @@ export class Login extends Component {
                             type="password"
                             className="password1"
                             autoComplete="current-password"
-                            helperText={this.state.lNameError? "Enter a password " : ''} 
+                            helperText={this.state.lNameError ? "Enter a password " : ''}
                             variant="outlined"
-                            onChange={e => this.changeHandler(e)} 
+                            onChange={e => this.changeHandler(e)}
                         />
                         <TextField
                             id="outlined-password-input"
+                            error={this.state.confirmError}
                             name="confirm"
                             label="Confirm"
                             className="confirm"
                             type="password"
                             autoComplete="current-password"
+                            helperText={this.state.confirmError ? "Enter correct password " : ''}
                             variant="outlined"
+                            onChange={e => this.changeHandler(e)}
                         /><br></br>
                     </div>
                     <span className="linepasswrd">Use 8 or more characters with a mix of letters, numbers & symbols</span>
@@ -124,10 +127,10 @@ export class Login extends Component {
                     </div>
 
                     <div className="lastsec">
-                    <div className="signin-link">
-                        <a className="signininstead" href="'./components/Signin'">Sign in instead</a>
+                        <div className="signin-link">
+                            <a className="signininstead" href="'./components/Signin'">Sign in instead</a>
 
-                    </div>
+                        </div>
                         <div className="nextbtn">
                             <Button variant="contained" className="next" color="primary" href="#contained-buttons" onClick={this.Next}>
                                 Next

@@ -11,6 +11,10 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    flex-wrap: wrap;
+}
+.fundoo-sign{
+    align-self: center;
 }
 .Login-sign{
     box-sizing: border-box;
@@ -57,4 +61,43 @@ width: auto;
 .notcomp{
     margin-top: 50px;
     text-align: left;
+}
+@media only screen and (max-width:600px) {
+    .signin-container{
+        height: 100%;
+        padding: 10%;
+        width: 100%;
+        margin-left: 0;
+        margin-top: 0;
+        border: none;
+       overflow: hidden;
+       
+    }
+    
+    
+    body{
+        justify-content: center;
+        overflow-x: scroll;
+        
+    }
+
+    .fundoo-sign {
+       
+        align-items:flex-start;
+    }
+
+    .heading-sign,
+    .heading-account {
+        margin-bottom: 15px;
+    }
+}
+
+@media only screen and (max-width:250px) { 
+
+    .last-sec {
+        display: flex;
+        flex-direction: column;
+        padding-top: 10%;
+    }
+
 }

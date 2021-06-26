@@ -1,5 +1,7 @@
+
 .container{
-    margin-top: 50px;
+    margin-top: 20px;
+    margin-bottom: 20px;
     padding: 48px 40px 36px;
     border-style: solid;
     border-width: 1.5px;
@@ -12,13 +14,14 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
+    overflow: hidden;
     
 }
 .name{
     margin-top: 20px;
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
+    
     justify-content: space-between;
 }
 .fname{
@@ -142,11 +145,12 @@ width: auto;
 }
 
 .form{
-   margin-top: 20px;
+   margin-top: 5px;
     display: flex;
     align-items: flex-start;
     flex-direction: column;
     justify-content: space-between;
+
 }
 .lastsec{
     margin-top: 50px;
@@ -163,4 +167,68 @@ width: auto;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
+}
+
+
+@media only screen and (max-width:600px) {
+    .container{
+        height: 100%;
+        padding: 24px 24px 24px 36px;
+        width: 600px;
+        overflow: hidden;
+        border: none;
+      
+    }
+    .fundoo{
+        padding: 15px;
+    }
+    .section2{
+        display: none;
+    }
+    .form{
+        margin-top: 5px;
+         display: flex;
+         align-items: flex-start;
+         flex-direction: column;
+         justify-content: space-between;
+     
+     }
+     .name{
+         width: 100%;
+         display: flex;
+         flex-direction: column;
+         justify-content: space-between;
+     }
+
+    .password{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+    .fname{
+        width: 100%;
+        padding: 10%;
+    }
+    .lname{
+        width: 100%;
+        padding: 10%;
+       
+    }
+    
+    .heading{
+        margin-bottom: 10px;
+    }
+}
+
+
+
+
+@media only screen and (max-width:250px) { 
+
+    .last-sec {
+        display: flex;
+        flex-direction: column;
+        padding-top: 10%;
+    }
+
 }
