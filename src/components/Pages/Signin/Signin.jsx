@@ -4,6 +4,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
 import '../Login/Login.css'
 import '../Signin/Signin.css'
+import { Link } from "react-router-dom";
 
 export class Signin extends Component {
     constructor(props) {
@@ -77,7 +78,7 @@ export class Signin extends Component {
 
                     <div className="lastsec">
                     <div className="signin-link">
-                        <a className="signininstead" href="../components/Pages/Signin/Signin.jsx">Create account</a>
+                        <Link className="signininstead" to="/">Create account</Link>
 
                     </div>
                         <div className="nextbtn">
