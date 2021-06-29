@@ -9,7 +9,8 @@ import IconButton from '@material-ui/core/IconButton';
 import '../Registration/Registration.css'
 import '../Signin/Signin.css'
 import '../ResetPassword/ResetPassword.css'
-// import { Link } from "react-router-dom";
+import UserService from '../../../services/UserService';
+const service = new UserService();
 
 
 export class ResetPassword extends Component {
@@ -26,25 +27,37 @@ export class ResetPassword extends Component {
              
         }
     }
-    handleClickShowPassword () {
-        try {
-            this.setState(state => ({ showPassword: !state.showPassword }));
-        } catch (err) {
-            console.log("error at handleClickShowPassword in resetPassword");
-        }
-    };
-    handleClickShowPassword1 () {
-        try {
-            this.setState(state => ({ showPassword1: !state.showPassword1 }));
-        } catch (err) {
-            console.log("error at handleClickShowPassword1 in resetPassword");
-        }
-    };
+    
     changeHandler = (e) => {
         this.setState({
             [e.target.name]: e.target.value,
         })
     }
+    handleClickShowPassword () {
+        // this.setState({ ...state, showPassword: !state.showPassword });
+        if(this.state.showPassword){
+            this.setState({
+               showPassword:false 
+            })
+        }else{
+            this.setState({
+                showPassword:true
+            })
+        }
+                
+    };
+    handleClickShowPassword1 () {
+        if(this.state.showPassword1){
+            this.setState({
+               showPassword1:false 
+            })
+        }else{
+            this.setState({
+                showPassword1:true
+            })
+        }
+                
+    };
     validation = () => {
         let isError = false;
         const error = this.state;
@@ -59,7 +72,25 @@ export class ResetPassword extends Component {
     Reset = () => {
         var validated = this.validation();
         if (validated) {
-            console.log("successfull validation ")
+            console.log("unsuccessfull validation ")
+        } else {
+
+            let data = {
+                
+                    "newPassword": this.state.password.value,
+                    "confirmNewPassword": this.state.confirm.value,
+                    // "token": this.activatedRoute.snapshot.paramMap.get("token")
+                  
+            }
+            service.ResetPassword(data)
+                .then(res => {
+                    console.log(res);
+                    localStorage.setItem("token", res.data);
+                    this.props.history.push("/signin");
+                })
+                .catch(err => {
+                    console.log(err)
+                })
         }
     }
 
@@ -79,14 +110,14 @@ export class ResetPassword extends Component {
                             name="password"
                             type={this.state.showPassword ? 'text' : 'password'}
                             error={this.state.passwordError}
-                            fullWidth ="true"
-                            id="outlined-basic4"
+                            fullWidth 
+                            id="outlined-basic"
                             className="email1"
                             label="Password"
                             helperText={this.state.passwordError ? "Please enter password " : ''}
                             variant="outlined"
                             onChange={e => this.changeHandler(e)}
-                            value={this.state.password}
+                            // value={this.state.password}
                             // onKeyPress={this.handleEnter}
                             InputProps={{
                                 endAdornment: (
@@ -107,13 +138,13 @@ export class ResetPassword extends Component {
                             name="confirm"
                             type={this.state.showPassword1 ? 'text' : 'password'}
                             error={this.state.confirmError}
-                            fullWidth ="true"
+                            fullWidth 
                             id="outlined-basic4"
                             className="email1"
                             label="Confirm"
                             helperText={this.state.confirmError ? "Enter correct confirm password  " : ''}
                             variant="outlined"
-                            value={this.state.confirm}
+                            // value={this.state.confirm}
                             // onKeyPress={this.handleEnter}
                             onChange={e => this.changeHandler(e)}
                             InputProps={{

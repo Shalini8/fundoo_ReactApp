@@ -5,17 +5,22 @@ import Button from '@material-ui/core/Button';
 import '../Registration/Registration.css'
 import '../Signin/Signin.css'
 import '../ForgotPassword/ForgotPassword.css'
-import { Link } from "react-router-dom";
+
+import UserService from '../../../services/UserService';
+
+
+const service = new UserService();
+
 
 export class ForgotPassword extends Component {
     constructor(props) {
         super(props)
-    
+
         this.state = {
-            username:'',
+            username: '',
             usernameError: false,
-            
-             
+
+
         }
     }
     changeHandler = (e) => {
@@ -36,16 +41,30 @@ export class ForgotPassword extends Component {
     Send = () => {
         var validated = this.validation();
         if (validated) {
-            console.log("successfull validation ")
+            console.log("unsuccessfull validation ")
+        } else {
+
+            let data = {
+                email: this.state.username
+            }
+            service.ForgetPassword(data)
+                .then(res => {
+                    console.log(res);
+                    localStorage.setItem("token", res.data);
+                    this.props.history.push("/");
+                })
+                .catch(err => {
+                    console.log(err)
+                })
         }
     }
 
-    
+
     render() {
         return (
-            <div className ="first-container">
-            <div  className = "forgotpassword-container">
-                 <div className="fundoo fundoo-sign">
+            <div className="first-container">
+                <div className="forgotpassword-container">
+                    <div className="fundoo fundoo-sign">
                         <span className="letterF">F</span>
                         <span className="letteru">u</span><span className="lettern">n</span><span className="letterd">d</span><span className="letterO">o</span><span className="lettero">o</span>
                     </div>
@@ -55,7 +74,7 @@ export class ForgotPassword extends Component {
                         <TextField
                             name="username"
                             error={this.state.usernameError}
-                            fullWidth ="true"
+                            fullWidth="true"
                             id="outlined-basic4"
                             className="email1"
                             label="Enter your phoneno or Email"
@@ -65,11 +84,11 @@ export class ForgotPassword extends Component {
                         /><br></br><br></br>
                     </div>
                     <div className="sendbtn">
-                            <Button variant="contained" className="next" color="primary" onClick={this.Send}>
-                                Send
-                            </Button>
-                        </div>
-            </div>
+                        <Button variant="contained" className="next" color="primary" onClick={this.Send}>
+                            Send
+                        </Button>
+                    </div>
+                </div>
             </div>
         )
     }

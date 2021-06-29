@@ -4,22 +4,22 @@ const baseUrl = 'http://fundoonotes.incubation.bridgelabz.com/api/'
 const config = {
     headers: {
         'Content-Type': 'application/json',
-        'x-access-token': localStorage.getItem('token')
+        'Authorization': localStorage.getItem('token')
     }
-}
+};
 class UserService {
     Registration = (data) => {
         console.log("registration here");
-        return axiosservice.postMethod(`${baseUrl}user/userSignUp`, data)
+        return axiosservice.postMethod(`${baseUrl}/user/userSignUp`, data , config)
     }
     Signin = (data) => {
-        return axiosservice.postMethod(`${baseUrl}/user/login`, data)
+        return axiosservice.postMethod(`${baseUrl}/user/login`, data, config)
     }
     ForgetPassword = (data) => {
-        return axiosservice.getMethod(`${baseUrl}/user/reset`)
+        return axiosservice.postMethod(`${baseUrl}/user/reset`,data, config)
     }
     ResetPassword = (data) => {
-        return axiosservice.getMethod(`${baseUrl}/user/reset-password`)
+        return axiosservice.postMethod(`${baseUrl}/user/reset-password`,data,config)
     }
    
     

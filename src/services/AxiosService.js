@@ -6,12 +6,12 @@ class AxiosService {
 postMethod = (url, data) =>{
    return axios.post(url,data)
 }
-// getMethod = (url, data, isHeaderRequired) =>{
-//   return axios.get(url,data,isHeaderRequired)
-// }
-getMethod = (url) =>{
-  return axios.get(url)
+getMethod = (url, data, isHeaderRequired) =>{
+  return axios.get(url,data,isHeaderRequired)
 }
+// getMethod = (url) =>{
+//   return axios.get(url)
+// }
 
 
 }

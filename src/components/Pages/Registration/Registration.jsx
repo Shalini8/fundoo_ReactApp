@@ -9,7 +9,6 @@ import { InputAdornment } from '@material-ui/core';
 import { Link } from "react-router-dom";
 import UserService from '../../../services/UserService';
 
-import axios from 'axios';
 const service = new UserService();
 
 
@@ -28,27 +27,35 @@ export class Registration extends Component {
             confirmError: false,
             fNameError: false,
             lNameError: false,
-            textType: 'password'
+           textType:'password'
         }
     }
 
     showPassword = () => {
-        if (this.state.textType === "password") {
+        console.log("showpassword")
+        if (this.state.textType === 'password') {
             this.setState({
-                textType: "text",
+                textType: 'text',
             });
         } else {
             this.setState({
-                textType: "password",
+                textType: 'password',
             });
         }
     };
 
     changeHandler = (e) => {
-        this.setState({
-            [e.target.name]: e.target.value,
-        })
-    }
+        if (e.target.name === "email") {
+            this.setState({
+              [e.target.name]: e.target.value + "@gmail.com",
+            });
+          } else {
+            this.setState({
+              [e.target.name]: e.target.value,
+            });
+          }
+        };
+    
 
     validation = () => {
         let isError = false;
@@ -70,8 +77,8 @@ export class Registration extends Component {
     Next = () => {
             var validated = this.validation();
         if (validated) {
-            console.log("successfull validation ")
-        }
+            console.log("unsuccessfull validation ")
+        }else{
         
         let data = {
             "firstName": this.state.fName,
@@ -83,7 +90,7 @@ export class Registration extends Component {
         service.Registration(data)
             .then(res => {
                 console.log(res);
-                localStorage.setItem("token", res.data.result.accesstoken);
+                localStorage.setItem("token", res.data);
                 console.log(res.data);
                 this.props.history.push("/signin")
             })
@@ -91,14 +98,13 @@ export class Registration extends Component {
                 console.log(err)
             })
     }
-
-
-
-    render() {
+}
+    
+ render() {
         return (
             <div className="first-container">
                 <div className="container">
-                    <div className="form">
+                    <form  className="form">
                         <div className="fundoo">
                             <span className="letterF">F</span>
                             <span className="letteru">u</span><span className="lettern">n</span><span className="letterd">d</span><span className="letterO">o</span><span className="lettero">o</span>
@@ -112,6 +118,7 @@ export class Registration extends Component {
                             <TextField
                                 name="email"
                                 error={this.state.emailError}
+                                fullWidth
                                 className="email"
                                 label="User name"
                                 InputProps={{
@@ -138,7 +145,6 @@ export class Registration extends Component {
                                 id="outlined-password-input1"
                                 name="password"
                                 label="Password"
-                                type="password"
                                 className="password1"
                                 autoComplete="current-password"
                                 helperText={this.state.lNameError ? "Enter a password " : ''}
@@ -152,7 +158,6 @@ export class Registration extends Component {
                                 name="confirm"
                                 label="Confirm"
                                 className="confirm"
-                                type="password"
                                 autoComplete="current-password"
                                 helperText={this.state.confirmError ? "Enter correct password " : ''}
                                 variant="outlined"
@@ -169,7 +174,7 @@ export class Registration extends Component {
                             <FormControlLabel
                                 control={<Checkbox color="primary" />}
                                 label="Show Password"
-                                onChange={this.showPassword}
+                                 onChange={this.showPassword}
                             />
                         </div>
                              <div className="lastsec">
@@ -183,7 +188,7 @@ export class Registration extends Component {
                                 </Button>
                             </div>
                         </div>
-                    </div>
+                    </form>
                     <div className="section2">
                         <img src="https://ssl.gstatic.com/accounts/signup/glif/account.svg" width="244" height="244" alt="Google image" />
                         <span>One account. All of Google<br></br> working for you</span>
