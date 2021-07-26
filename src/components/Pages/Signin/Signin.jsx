@@ -4,6 +4,8 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
 import '../Registration/Registration.css'
 import '../Signin/Signin.css'
+
+
 import { Link } from "react-router-dom";
 import UserService from '../../../services/UserService';
 
@@ -45,14 +47,14 @@ export class Signin extends Component {
         } else {
 
             let data = {
-                "username": this.state.username,
-                "password": this.state.password
+                email: this.state.username,
+                password: this.state.password
             }
             service.Signin(data)
                 .then(res => {
                     console.log(res);
-                    localStorage.setItem("token", res.data);
-                    this.props.history.push("/signin");
+                    localStorage.setItem("token", res.data.id);
+                    this.props.history.push("/fundooKeep");
                 })
                 .catch(err => {
                     console.log(err)
@@ -93,6 +95,7 @@ export class Signin extends Component {
                         <div className="sign-email1">
                             <TextField
                                 name="password"
+                                type="password"
                                 error={this.state.usernameError}
                                 fullWidth
                                 id="outlined-basic5"
@@ -120,7 +123,7 @@ export class Signin extends Component {
 
                         </div>
                         <div className="nextbtn">
-                            <Button variant="contained" className="next" color="primary" href="#contained-buttons" onClick={this.Next}>
+                            <Button variant="contained" className="next" color="primary"  onClick={this.Next}>
                                 Next
                             </Button>
                         </div>

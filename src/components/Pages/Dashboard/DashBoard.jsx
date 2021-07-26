@@ -21,6 +21,13 @@ import TrashIcon from "@material-ui/icons/DeleteOutlined";
 import InputBase from "@material-ui/core/InputBase";
 import SearchIcon from "@material-ui/icons/Search";
 import KeepIcon from "./keep.png";
+import RefreshIcon from '@material-ui/icons/Refresh';
+import SettingsIcon from '@material-ui/icons/Settings';
+import ViewIcon from '@material-ui/icons/ViewStreamOutlined';
+import AppsIcon from '@material-ui/icons/Apps';
+import CloseIcon from '@material-ui/icons/Close';
+import "../Dashboard/DashBoard.css";
+
 
 const drawerWidth = 240;
 
@@ -29,6 +36,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
   },
   appBar: {
+    backgroundColor: '#fff',
     zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(["width", "margin"], {
       easing: theme.transitions.easing.sharp,
@@ -53,6 +61,7 @@ const useStyles = makeStyles((theme) => ({
     width: drawerWidth,
     flexShrink: 0,
     whiteSpace: "nowrap",
+    top: '55px'
   },
   drawerOpen: {
     width: drawerWidth,
@@ -92,12 +101,19 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   search: {
+    width: "100%",
+    height:"50px",
+    marginLeft:"50%",
     flexGrow: 0.5,
     position: "relative",
     borderRadius: theme.shape.borderRadius,
-    backgroundColor: fade(theme.palette.common.white, 0.15),
+    backgroundColor: '#f5f5f5',
     "&:hover": {
-      backgroundColor: fade(theme.palette.common.white, 0.25),
+      border:'1px solid #f5f5f5',
+      boxShadow: '0px 0px 10px 2px rgba(187,187,187,0.75)',
+      // -webkit-box-shadow: '0px 0px 10px 2px rgba(187,187,187,0.75)',
+      // -moz-box-shadow: '0px 0px 10px 2px rgba(187,187,187,0.75)',
+      backgroundColor: '#fff',
     },
     marginRight: theme.spacing(2),
     marginLeft: 0,
@@ -108,6 +124,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   searchIcon: {
+    color:'rgba(0, 0, 0, 0.54)',
     padding: theme.spacing(0, 2),
     height: "100%",
     position: "absolute",
@@ -120,6 +137,7 @@ const useStyles = makeStyles((theme) => ({
     color: "inherit",
   },
   inputInput: {
+    color:'#000',
     padding: theme.spacing(1, 1, 1, 0),
     // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
@@ -148,41 +166,37 @@ export default function DashBoard(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-  const [header, setHeader] = React.useState("Keep");
+  // const [header, setHeader] = React.useState("Keep");
 
   const handleDrawerOpen = () => {
-    setOpen(true);
+    setOpen(open ? false : true);
   };
 
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
+
 
   return (
+   
     <div className={classes.root}>
       <CssBaseline />
       <AppBar
         position="fixed"
-        className={clsx(classes.appBar, {
-          [classes.appBarShift]: open,
-        })}
+        className={clsx(classes.appBar)}
       >
-        <Toolbar>
+        <div className = 'toolbar'>
+        <Toolbar >
           <IconButton
             color="default"
             aria-label="open drawer"
             onClick={handleDrawerOpen}
             edge="start"
-            className={clsx(classes.menuButton, {
-              [classes.hide]: open,
-            })}
+            className={clsx(classes.menuButton)}
           >
             <MenuIcon />
           </IconButton>
           <Typography className={classes.title} variant="h6" Wrap>
             <div className={classes.keepIcon}>
               <img src={KeepIcon} alt="keep-icon" />
-              <p>Keep</p>
+              <p className = 'keep-wrd'>Keep</p>
             </div>
           </Typography>
           <div className={classes.search}>
@@ -197,12 +211,19 @@ export default function DashBoard(props) {
               }}
               inputProps={{ "aria-label": "search" }}
             />
+            
           </div>
+
+          <RefreshIcon className = 'ref-icon'/>
+          <ViewIcon className='view-icon'/>
+          <SettingsIcon className ='setting-icon'/> 
+          <AppsIcon className='app-icon'/>
         </Toolbar>
+        </div>
       </AppBar>
       <Drawer
         variant="permanent"
-        className={clsx(classes.drawer, {
+        className={clsx(classes.drawer, 'custom-drawr' ,{
           [classes.drawerOpen]: open,
           [classes.drawerClose]: !open,
         })}
@@ -212,18 +233,9 @@ export default function DashBoard(props) {
             [classes.drawerClose]: !open,
           }),
         }}
+        style={{position: 'absolute', top: '55px'}}
       >
-        <div className={classes.toolbar}>
-          <IconButton
-            color="default"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerClose}
-            className={classes.menu2}
-          >
-            {theme.direction === "rtl" ? <MenuIcon /> : <MenuIcon />}
-          </IconButton>
-        </div>
+       
         <Divider />
         <List>
           {["Notes", "Reminders", "Edit labels", "Archive", "Trash"].map(
@@ -231,15 +243,26 @@ export default function DashBoard(props) {
               <ListItem button key={text}>
                 <ListItemIcon className={classes.icon}>
                   {index === 0 ? (
-                    <NotesIcon />
+                    <NotesIcon  
+                    aria-label="open drawer"
+                    onClick={handleDrawerOpen}
+                    edge="start"/>
                   ) : index === 1 ? (
-                    <ReminderIcon />
+                    <ReminderIcon aria-label="open drawer"
+                    onClick={handleDrawerOpen}
+                    edge="start" />
                   ) : index === 2 ? (
-                    <EditIcon />
+                    <EditIcon aria-label="open drawer"
+                    onClick={handleDrawerOpen}
+                    edge="start" />
                   ) : index === 3 ? (
-                    <ArchiveIcon />
+                    <ArchiveIcon aria-label="open drawer"
+                    onClick={handleDrawerOpen}
+                    edge="start"/>
                   ) : (
-                    <TrashIcon />
+                    <TrashIcon aria-label="open drawer"
+                    onClick={handleDrawerOpen}
+                    edge="start" />
                   )}
                 </ListItemIcon>
                 <ListItemText primary={text} />
@@ -249,6 +272,10 @@ export default function DashBoard(props) {
         </List>
         <Divider />
       </Drawer>
+      <div className = 'note-component'>
+        {props.children}
+      </div>
     </div>
+
   );
 }

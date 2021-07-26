@@ -50,7 +50,7 @@ export class ForgotPassword extends Component {
             service.ForgetPassword(data)
                 .then(res => {
                     console.log(res);
-                    localStorage.setItem("token", res.data);
+                    // localStorage.setItem("token", res.data.id);
                     this.props.history.push("/");
                 })
                 .catch(err => {

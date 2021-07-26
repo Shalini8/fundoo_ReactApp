@@ -6,6 +6,7 @@ import { InputAdornment } from '@material-ui/core';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import IconButton from '@material-ui/core/IconButton';
+import FormHelperText from "@material-ui/core/FormHelperText";
 import '../Registration/Registration.css'
 import '../Signin/Signin.css'
 import '../ResetPassword/ResetPassword.css'
@@ -34,7 +35,6 @@ export class ResetPassword extends Component {
         })
     }
     handleClickShowPassword () {
-        // this.setState({ ...state, showPassword: !state.showPassword });
         if(this.state.showPassword){
             this.setState({
                showPassword:false 
@@ -74,18 +74,23 @@ export class ResetPassword extends Component {
         if (validated) {
             console.log("unsuccessfull validation ")
         } else {
+            var url = window.location.href;
+         var tokeninput = url.split("/");
+         var newToken = tokeninput[4];
+         var token = newToken.split("?");
+        var requiredToken = token[0];
+        console.log(requiredToken );
 
             let data = {
                 
-                    "newPassword": this.state.password.value,
-                    "confirmNewPassword": this.state.confirm.value,
-                    // "token": this.activatedRoute.snapshot.paramMap.get("token")
+                    "newPassword": this.state.password,
+                    "token": requiredToken
                   
             }
             service.ResetPassword(data)
                 .then(res => {
                     console.log(res);
-                    localStorage.setItem("token", res.data);
+                    localStorage.setItem("token", res.data.id);
                     this.props.history.push("/signin");
                 })
                 .catch(err => {
@@ -117,14 +122,14 @@ export class ResetPassword extends Component {
                             helperText={this.state.passwordError ? "Please enter password " : ''}
                             variant="outlined"
                             onChange={e => this.changeHandler(e)}
-                            // value={this.state.password}
-                            // onKeyPress={this.handleEnter}
                             InputProps={{
                                 endAdornment: (
                                     <InputAdornment position="end">
                                         <IconButton
                                             aria-label="Toggle password visibility"
-                                            onClick={this.handleClickShowPassword}
+                                            // onChange={this.handlechange.bind(this)}
+
+                                            onClick={this.handleClickShowPassword.bind(this)}
                                         >
                                             {this.state.showPassword ? <Visibility /> : <VisibilityOff />}
                                         </IconButton>
@@ -144,15 +149,13 @@ export class ResetPassword extends Component {
                             label="Confirm"
                             helperText={this.state.confirmError ? "Enter correct confirm password  " : ''}
                             variant="outlined"
-                            // value={this.state.confirm}
-                            // onKeyPress={this.handleEnter}
                             onChange={e => this.changeHandler(e)}
                             InputProps={{
                                 endAdornment: (
                                     <InputAdornment position="end">
                                         <IconButton
                                             aria-label="Toggle password visibility"
-                                            onClick={this.handleClickShowPassword1}
+                                            onClick={this.handleClickShowPassword1.bind(this)}
                                         >
                                             {this.state.showPassword1 ? <Visibility /> : <VisibilityOff />}
                                         </IconButton>
@@ -162,6 +165,10 @@ export class ResetPassword extends Component {
                         /><br></br><br></br>
                         
                     </div>
+                    {this.state.password !== this.state.confirm ? (
+                            <FormHelperText error>Password doesn't match</FormHelperText>
+                        ) : null}
+
                     <div className="Resetbtn">
                             <Button variant="contained" className="next" color="primary" onClick={this.Reset}>
                                 Reset
