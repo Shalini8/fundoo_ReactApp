@@ -1,6 +1,7 @@
 .check-icon,.brush-icon,.image-icon{
     color: rgba(0, 0, 0, 0.54);
     margin-left: 5%;
+    width: auto;
 }
 .MuiCardContent-root:last-child {
     /* padding-bottom: 24px; */
@@ -8,4 +9,14 @@
 }
 .takenote-icons{
     padding-left: 150px;
+}
+.icon-close{
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+.iconbtn{
+    
+    width: 80%;
+    justify-content: space-between;
 }
