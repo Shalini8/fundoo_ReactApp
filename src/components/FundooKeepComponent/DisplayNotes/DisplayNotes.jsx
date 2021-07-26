@@ -5,7 +5,8 @@ import '../DisplayNotes/DisplayNotes.css'
 
 export default function DisplayNotes() {
     return (
-        <div className='note'>
+        <div 
+            className='note'>
             <h1> title </h1>
             <p> content</p>
             <IconButton/>

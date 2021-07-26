@@ -10,6 +10,8 @@ import BrushIcon from "@material-ui/icons/Brush";
 import ImageOutlinedIcon from "@material-ui/icons/ImageOutlined";
 import "../CreateNote/CreateNote.css";
 import IconButton from "../IconButton/IconButton";
+import UserService from "../../../services/UserService";
+const service = new UserService();
 
 export default class CreateNote extends React.Component {
   constructor(props) {
@@ -35,6 +37,19 @@ export default class CreateNote extends React.Component {
   };
   addEvent = () =>{
     this.setState({ showContent: false });
+    let data = {
+      title: this.state.text,
+      description: this.state.description,
+    };
+
+    service
+      .AddNote(data)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
 
