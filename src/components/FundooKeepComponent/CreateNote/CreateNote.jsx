@@ -38,7 +38,7 @@ export default class CreateNote extends React.Component {
     }
   };
   addEvent = () => {
-    let data = {
+  let data = {
       title: this.state.title,
       description: this.state.description,
     };
@@ -58,17 +58,7 @@ export default class CreateNote extends React.Component {
         console.log(err);
       });
   };
-  // getANote = ()=>{
-  //   service
-  //     .GetNote()
-  //     .then((res) => {
-  //       console.log(res.data.data.data);
-        
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  //   }
+  
 
   render() {
     return (
@@ -86,9 +76,9 @@ export default class CreateNote extends React.Component {
                   placeholder="Take a Note"
                 ></input>
                 <span className="takenote-icons">
-                  <CheckBoxOutlinedIcon className="check-icon" />
-                  <BrushIcon className="brush-icon" />
-                  <ImageOutlinedIcon className="image-icon" />
+                  <CheckBoxOutlinedIcon className="cbi-icon" />
+                  <BrushIcon className="cbi-icon" />
+                  <ImageOutlinedIcon className="cbi-icon" />
                 </span>
               </Grid>
             </CardContent>

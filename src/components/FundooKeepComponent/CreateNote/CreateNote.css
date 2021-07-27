@@ -1,7 +1,12 @@
-.check-icon,.brush-icon,.image-icon{
+.cbi-icon{
     color: rgba(0, 0, 0, 0.54);
     margin-left: 5%;
     width: auto;
+}
+.cbi-icon:hover{
+    background-color: #ccc;
+    border-radius: 30px;
+    cursor: pointer;
 }
 .MuiCardContent-root:last-child {
     /* padding-bottom: 24px; */
