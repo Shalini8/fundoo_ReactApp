@@ -22,11 +22,12 @@ class UserService {
         return axiosservice.postMethod(`${baseUrl}/user/reset-password`,data,config)
     }
     AddNote = (data) => {
-        console.log("registration here");
-
         return axiosservice.postMethod(`${baseUrl}notes/addNotes`, data, config)
     }
-    
+    GetNote = () => {
+        return axiosservice.getMethod(`${baseUrl}notes/getNotesList`,  config)
+
+    }
    
    
     

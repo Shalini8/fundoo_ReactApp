@@ -10,7 +10,7 @@ import "../IconButton/IconButton.css"
 
 export default function IconButton() {
     return (
-        <div>
+        <div className = 'icon-btns'>
         <AddAlertIcon className="btn-icon" />
         <CollaboratorIcon className="btn-icon" />
         <ColorLensIcon className="btn-icon" />
