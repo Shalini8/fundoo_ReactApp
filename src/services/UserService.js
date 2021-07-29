@@ -28,9 +28,21 @@ class UserService {
         return axiosservice.getMethod(`${baseUrl}notes/getNotesList`,  config)
 
     }
+    ArchiveNote = (data) => {
+        return axiosservice.postMethod(`${baseUrl}notes/archiveNotes`, data, config);
+      }
+    DeleteNote = (data) => {
+        return axiosservice.postMethod(`${baseUrl}notes/trashNotes`, data, config);
+    }
+    ChangeColor = (data) => {
+        return axiosservice.postMethod(`${baseUrl}notes/changesColorNotes`,data,config);
+      };
+    
+    
+    }
    
    
     
-}
+
 
 export default UserService;

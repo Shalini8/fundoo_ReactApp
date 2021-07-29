@@ -23,6 +23,9 @@ export default class CreateNote extends React.Component {
       title: "",
       description: "",
       showContent: false,
+      color: "",
+      isArchived: false,
+      isDeleted: false,
     };
   }
   changeHandler = (e) => {
@@ -31,8 +34,8 @@ export default class CreateNote extends React.Component {
     });
     console.log(this.state.title);
   };
-
-  handleOnClick = () => {
+ 
+   handleOnClick = () => {
     if (!this.state.showContent) {
       this.setState({ showContent: true });
     }
@@ -41,6 +44,9 @@ export default class CreateNote extends React.Component {
   let data = {
       title: this.state.title,
       description: this.state.description,
+      color: this.state.color,
+      isArchived: this.state.isArchived,
+      isDeleted:this.state.isDeleted,
     };
 
     service
@@ -49,14 +55,33 @@ export default class CreateNote extends React.Component {
         this.props.get();
         console.log(res);
         this.setState({
+          color: "#ffffff",
+          isArchived: false,
+          isDeleted: false,
           showContent: false,
-          text: "",
+          title: "",
           description: "",
+          
         });
       })
       .catch((err) => {
         console.log(err);
       });
+  };
+  create =(color)=>{
+    this.setState({
+      color: color
+    })
+  }
+  handleDelete = () => {
+    this.setState({
+      isDeleted: true,
+    });
+  };
+  handleArchive = () => {
+    this.setState({
+      isArchived: true,
+    });
   };
   
 
@@ -85,19 +110,19 @@ export default class CreateNote extends React.Component {
           </Card>
         </div>
         <div
-          style={{ display: this.state.showContent ? "flex" : "none" , width: "100%", justifyContent:'center'}}
+          style={{ display: this.state.showContent ? "flex" : "none" , width: "100%", justifyContent:'center', backgroundColor: this.props.notes.color}}
           onClick={this.handleOnClick}
         >
-          <Card className="input-card card-shadow" variant="outlined">
+          <Card className="input-card card-shadow" variant="outlined" style={{ backgroundColor: this.state.color }}>
             <CardContent >
-              <TextareaAutosize style={{resize:'none',width:'100%'}}
+              <TextareaAutosize style={{resize:'none',width:'100%',backgroundColor: this.state.color}}
                 className="title"
                 name="title"
                 value={this.state.title}
                 onChange={(e) => this.changeHandler(e)}
                 placeholder="Title"
               />
-              <TextareaAutosize style={{resize:'none'}}
+              <TextareaAutosize style={{resize:'none',backgroundColor: this.state.color}}
                 className="title"
                 name="description"
                 value={this.state.description}
@@ -107,7 +132,16 @@ export default class CreateNote extends React.Component {
             </CardContent>
             <div className="icon-close">
               <div className="iconbtn">
-                <IconButton />
+                <IconButton  
+                noteString='create'
+                color={this.create}
+                // get={this.props.get}
+                note={this.props.notes}
+                addnote={this.state.addEvent}
+                archive={this.handleArchive}
+                delete={this.handleDelete}
+
+                />
               </div>
               <Button onClick={this.addEvent} size="small">
                 Close

@@ -9,6 +9,9 @@ import "../IconButton/IconButton.css";
 import Fade from "@material-ui/core/Fade";
 import Paper from "@material-ui/core/Paper";
 import Popper from "@material-ui/core/Popper";
+import UserService from "../../../services/UserService";
+const service = new UserService();
+
 
 export class IconButton extends Component {
   constructor(props) {
@@ -17,22 +20,18 @@ export class IconButton extends Component {
     this.state = {
       open: false,
       anchorEl: null,
+
     };
   }
   handleClick = (e) => {
     this.setState({
       open: !this.state.open,
       anchorEl: e.currentTarget,
-      color: "#ffffff",
       openOptions: false,
     });
   };
 
-  onButtonClick = (e) => {
-    this.setState({
-      color: e.target.name,
-    });
-  };
+  
   onClickmoreOptions = (e) => {
     this.setState({
       openOptions: !this.state.openOptions,
@@ -40,8 +39,89 @@ export class IconButton extends Component {
       anchorEl: e.currentTarget,
     });
   };
+  onClickChangeColor = (color) => {
+    if(this.props.noteString === 'create'){
+       this.props.color(color)
+    }
+    else{
+      let data = {
+        noteIdList: [this.props.note.id],
+        color: color
+      };
+      service
+        .ChangeColor(data)
+        .then((res) => {
+          console.log(res);
+          this.props.get();
+          // this.props.addnote();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      }
+    
+  };
+  onArchive = () => {
+    if(this.props.noteString === 'create'){
+      this.props.archive()
+    }
+    else{
+    let data = {
+      noteIdList: [this.props.note.id],
+      isArchived: true,
+    };
+    service
+      .ArchiveNote(data)
+      .then((res) => {
+        console.log(res);
+        this.props.get();
+        // this.props.addnote();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    }
+  };
+
+
+  onDelete = () => {
+    if(this.props.noteString === 'create'){
+      this.props.delete()
+    }
+    else{
+    let data = {
+      noteIdList: [this.props.note.id],
+      isDeleted: true,
+    };
+    service
+      .DeleteNote(data)
+      .then((res) => {
+        console.log(res);
+        this.props.get();
+
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    }
+  };
+
 
   render() {
+    const colorbtn =[{title:'Default',name:'#ffffff'},
+    {title:'Red',name:'#f28b82'},
+    {title:'Orange',name:'#fbbc04'},
+    {title:'Yellow',name:'#fff475'},
+    {title:'Green',name:'#ccff90'},
+    {title:'Teal',name:'#a7ffeb'},
+    {title:'Blue',name:'#cbf0f8'},
+    {title:'Darkblue',name:'#aecbfa'},
+    {title:'Purple',name:'#d7aefb'},
+    {title:'Pink',name:'#fdcfe8'},
+    {title:'Brown',name:'#e6c9a8'},
+    {title:'Grey',name:'#e8eaed'}
+  ];
+
     return (
       <div className="icon-btns">
         <Popper
@@ -54,78 +134,21 @@ export class IconButton extends Component {
             <Fade {...TransitionProps} timeout={100}>
               <Paper>
                 <div className="color-palette">
-                  <button
-                    onClick={this.onButtonClick}
-                    title="Default"
-                    name="#ffffff"
-                    className="color color-1"
-                  ></button>
-                  <button
-                    onClick={this.onButtonClick}
-                    title="Red"
-                    name="#f28b82"
-                    className="color color-2"
-                  ></button>
-                  <button
-                    onClick={this.onButtonClick}
-                    title="Orange"
-                    name="#fbbc04"
-                    className="color color-3"
-                  ></button>
-                  <button
-                    onClick={this.onButtonClick}
-                    title="Yellow"
-                    name="#fff475"
-                    className="color color-4"
-                  ></button>
-                  <button
-                    onClick={this.onButtonClick}
-                    title="Green"
-                    name="#ccff90"
-                    className="color color-5"
-                  ></button>
-                  <button
-                    onClick={this.onButtonClick}
-                    title="Teal"
-                    name="#a7ffeb"
-                    className="color color-6"
-                  ></button>
-                  <button
-                    onClick={this.onButtonClick}
-                    title="Blue"
-                    name="#cbf0f8"
-                    className="color color-7"
-                  ></button>
-                  <button
-                    onClick={this.onButtonClick}
-                    title="Dark Blue"
-                    name="#aecbfa"
-                    className="color color-8"
-                  ></button>
-                  <button
-                    onClick={this.onButtonClick}
-                    title="Purple"
-                    name="#d7aefb"
-                    className="color color-9"
-                  ></button>
-                  <button
-                    onClick={this.onButtonClick}
-                    title="Pink"
-                    name="#fdcfe8"
-                    className="color color-10"
-                  ></button>
-                  <button
-                    onClick={this.onButtonClick}
-                    title="Brown"
-                    name="#e6c9a8"
-                    className="color color-11"
-                  ></button>
-                  <button
-                    onClick={this.onButtonClick}
-                    title="Grey"
-                    name="#e8eaed"
-                    className="color color-12"
-                  ></button>
+                  {colorbtn.map((colorbtn,index)=>(
+                      <button key={index} name={colorbtn.name}
+                       title={colorbtn.title} 
+                       onClick={(event) => this.onClickChangeColor(colorbtn.name)}
+                      //  onClick={this.onClickChangeColor()}
+
+                       //pass 
+                       style={{ backgroundColor:colorbtn.name,
+                        width:'28px',
+                      height:'28px',
+                      borderRadius:'15px',border: '1px solid #a0a0a0'
+                     }} >
+                   </button>
+                   ))}
+
                 </div>
               </Paper>
             </Fade>
@@ -144,48 +167,18 @@ export class IconButton extends Component {
                 <div className="moreOptions">
                   <ul>
                     <li
-                      //   onClick={this.onDelete}
+                      onClick={this.onDelete}
                       title="Delete note"
                       name="delete"
                       className="options delete-opt"
-                    >
+                      >
                       Delete note
                     </li>
-                    <li
-                      title="Add label"
-                      name="addLabel"
-                      className="options addLabl-opt"
-                    >
-                      Add label
-                    </li>
-                    <li
-                      title="Add drawing"
-                      name="addDrwaing"
-                      className="options addDraw-opt"
-                    >
-                      Add Drawing
-                    </li>
-                    <li
-                      title="Make a copy"
-                      name="makeCopy"
-                      className="options copy-opt"
-                    >
-                      Make a copy
-                    </li>
-                    <li
-                      title="Show checkboxes"
-                      name="showCheckbox"
-                      className="options showCheckbox-opt"
-                    >
-                      Show checkboxes
-                    </li>
-                    <li
-                      title="Copy to Google Docs"
-                      name="copyToDocs"
-                      className="options copyDocs-opt"
-                    >
-                      Copy to Google Docs
-                    </li>
+                    <li>Add label</li>
+                    <li> Add Drawing</li>
+                    <li>Make a copy</li>
+                    <li>Show checkboxes</li>
+                    <li>Copy to Google Docs</li>
                   </ul>
                 </div>
               </Paper>
@@ -200,7 +193,12 @@ export class IconButton extends Component {
           onClick={this.handleClick}
         />
         <PhotoIcon title="Add image" className="btn-icon" />
-        <ArchiveIcon title="Archive" className="btn-icon" />
+        <ArchiveIcon
+          title="Archive"
+          className="btn-icon"
+          onClick={this.onArchive}
+         
+        />
         <MoreIcon
           title="More"
           className="btn-icon"

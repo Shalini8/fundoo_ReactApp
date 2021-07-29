@@ -16,15 +16,13 @@ export class NotesContainer extends React.Component {
   componentDidMount() {
     this.getANote();
   }
-
+  
   getANote = () => {
     service
       .GetNote()
       .then((res) => {
         let data = res.data.data.data;
-        let newnote = data.filter((element)=>{
-            return element.isArchived === false && element.isDeleted === false;
-        })
+        let newnote = data.filter(i => (i.isArchived || i.isDeleted) === false)
         this.setState({
           notes: newnote.reverse(),
         });
@@ -34,11 +32,12 @@ export class NotesContainer extends React.Component {
       });
   };
   render() {
-    console.log(this.state.notes);
     return (
       <DashBoard>
-        <CreateNote get={this.getANote} />
-        <DisplayNotes notes={this.state.notes} />
+        <CreateNote get={this.getANote} notes={this.state.notes}  />
+        <DisplayNotes notes={this.state.notes} 
+         get={this.getANote}
+        />
       </DashBoard>
     );
   }
