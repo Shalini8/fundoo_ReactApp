@@ -123,7 +123,7 @@ export class IconButton extends Component {
   ];
 
     return (
-      <div className="icon-btns">
+      <div >
         <Popper
           open={this.state.open}
           anchorEl={this.state.anchorEl}
@@ -138,9 +138,6 @@ export class IconButton extends Component {
                       <button key={index} name={colorbtn.name}
                        title={colorbtn.title} 
                        onClick={(event) => this.onClickChangeColor(colorbtn.name)}
-                      //  onClick={this.onClickChangeColor()}
-
-                       //pass 
                        style={{ backgroundColor:colorbtn.name,
                         width:'28px',
                       height:'28px',

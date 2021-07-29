@@ -25,6 +25,13 @@
     display: block;
     
     }
+.icon-close{
+    display: flex;
+    padding: 5px;
+}
+.icon-btn{
+    width: 70%;
+}
 
 @media only screen and (max-width :1020px){
     .note{
