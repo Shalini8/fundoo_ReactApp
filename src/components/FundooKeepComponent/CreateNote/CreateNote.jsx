@@ -23,9 +23,11 @@ export default class CreateNote extends React.Component {
       title: "",
       description: "",
       showContent: false,
-      color: "",
+      color: "#ffffff",
       isArchived: false,
       isDeleted: false,
+      collaboratorOpen: false,
+
     };
   }
   changeHandler = (e) => {
@@ -40,6 +42,9 @@ export default class CreateNote extends React.Component {
       this.setState({ showContent: true });
     }
   };
+  
+  
+
   addEvent = () => {
   let data = {
       title: this.state.title,
@@ -56,8 +61,6 @@ export default class CreateNote extends React.Component {
         console.log(res);
         this.setState({
           color: "#ffffff",
-          isArchived: false,
-          isDeleted: false,
           showContent: false,
           title: "",
           description: "",
@@ -73,14 +76,19 @@ export default class CreateNote extends React.Component {
       color: color
     })
   }
+  handleArchive = () => {
+    this.setState({
+      isArchived: true,
+    });
+  };
   handleDelete = () => {
     this.setState({
       isDeleted: true,
     });
   };
-  handleArchive = () => {
+  collaboratorDialog = () => {
     this.setState({
-      isArchived: true,
+      collaboratorOpen: true,
     });
   };
   
@@ -115,14 +123,14 @@ export default class CreateNote extends React.Component {
         >
           <Card className="input-card card-shadow" variant="outlined" style={{ backgroundColor: this.state.color }}>
             <CardContent >
-              <TextareaAutosize style={{resize:'none',width:'100%',backgroundColor: this.state.color}}
+              <TextareaAutosize style={{resize:'none',width:'100%',backgroundColor: this.state.color,fontFamily:' Roboto,Arial,sans-serif'}}
                 className="title"
                 name="title"
                 value={this.state.title}
                 onChange={(e) => this.changeHandler(e)}
                 placeholder="Title"
               />
-              <TextareaAutosize style={{resize:'none',backgroundColor: this.state.color}}
+              <TextareaAutosize style={{resize:'none',backgroundColor: this.state.color,fontFamily:' Roboto,Arial,sans-serif'}}
                 className="title"
                 name="description"
                 value={this.state.description}
@@ -140,6 +148,7 @@ export default class CreateNote extends React.Component {
                 addnote={this.state.addEvent}
                 archive={this.handleArchive}
                 delete={this.handleDelete}
+                collaborator={this.collaboratorDialog}
 
                 />
               </div>

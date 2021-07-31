@@ -37,6 +37,18 @@ class UserService {
     ChangeColor = (data) => {
         return axiosservice.postMethod(`${baseUrl}notes/changesColorNotes`,data,config);
       };
+    UpdateNotes = (data) => {
+        return axiosservice.postMethod(`${baseUrl}notes/updateNotes`,data,config);
+      };
+    
+    GetArchiveNotesList = () => {
+        return axiosservice.getMethod(`${baseUrl}notes/getArchiveNotesList`,config);
+      };
+    
+    GetTrashNotesList = () => {
+        return axiosservice.getMethod(`${baseUrl}notes/getTrashNotesList`, config);
+      };
+    
     
     
     }

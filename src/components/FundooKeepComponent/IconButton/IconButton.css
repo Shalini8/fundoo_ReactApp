@@ -89,3 +89,8 @@ li:hover {
 .optionsPaper {
     box-shadow: 1px 1px 5px #a0a0a0;
 }
+@media only screen and (max-width :650px){
+    .ic-btn{
+        width: 180px;
+    }
+}

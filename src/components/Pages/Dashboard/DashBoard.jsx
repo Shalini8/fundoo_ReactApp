@@ -25,6 +25,10 @@ import RefreshIcon from '@material-ui/icons/Refresh';
 import SettingsIcon from '@material-ui/icons/Settings';
 import ViewIcon from '@material-ui/icons/ViewStreamOutlined';
 import AppsIcon from '@material-ui/icons/Apps';
+import { Link , useHistory} from "react-router-dom";
+
+import { NotesContainer } from "../../FundooKeepComponent/FundooKeep";
+
 import CloseIcon from '@material-ui/icons/Close';
 import "../Dashboard/DashBoard.css";
 
@@ -165,12 +169,25 @@ const useStyles = makeStyles((theme) => ({
 export default function DashBoard(props) {
   const classes = useStyles();
   const theme = useTheme();
+  const history = useHistory()
   const [open, setOpen] = React.useState(false);
   // const [header, setHeader] = React.useState("Keep");
 
   const handleDrawerOpen = () => {
     setOpen(open ? false : true);
   };
+  const handleTrashOpen = () =>{
+    setOpen(open ? false : true);
+    history.push("/fundooKeep/trash");
+  }
+  const handleArchiveOpen = () =>{
+    setOpen(open ? false : true);
+    history.push("/fundooKeep/archive");
+  }
+  const handleNotesOpen = () =>{
+    setOpen(open ? false : true);
+    history.push("/fundooKeep/notes");
+  }
 
 
 
@@ -245,7 +262,7 @@ export default function DashBoard(props) {
                   {index === 0 ? (
                     <NotesIcon  
                     aria-label="open drawer"
-                    onClick={handleDrawerOpen}
+                    onClick={handleNotesOpen}
                     edge="start"/>
                   ) : index === 1 ? (
                     <ReminderIcon aria-label="open drawer"
@@ -257,11 +274,11 @@ export default function DashBoard(props) {
                     edge="start" />
                   ) : index === 3 ? (
                     <ArchiveIcon aria-label="open drawer"
-                    onClick={handleDrawerOpen}
+                    onClick={handleArchiveOpen}
                     edge="start"/>
                   ) : (
                     <TrashIcon aria-label="open drawer"
-                    onClick={handleDrawerOpen}
+                    onClick={handleTrashOpen}
                     edge="start" />
                   )}
                 </ListItemIcon>
