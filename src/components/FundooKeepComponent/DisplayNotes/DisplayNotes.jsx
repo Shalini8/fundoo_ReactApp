@@ -12,27 +12,30 @@ import {
   TextareaAutosize,
   Popper,
   Paper,
+  List,
 } from "@material-ui/core";
 import AccountIcon from "@material-ui/icons/AccountCircleOutlined";
 import PersonAddIcon from "@material-ui/icons/PersonAddOutlined";
 import UserService from "../../../services/UserService";
 const service = new UserService();
 
-
 export class DisplayNotes extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      collaboratorOpen: false,
       openStatus: false,
       id: "",
-     title: "",
+      title: "",
       description: "",
       color: "",
+      usersList: [],
+      openPopper: false,
+      collaborators: [],
+      collaboratorOpen: false,
     };
   }
- 
+
   handleClickOpen = (val) => {
     this.setState({
       openStatus: !this.state.openStatus,
@@ -41,6 +44,7 @@ export class DisplayNotes extends Component {
       id: val.id,
       color: val.color,
       noteID: val.id,
+      collaborators: val.collaborators,
     });
   };
   handleTitleChange = (e) => {
@@ -55,11 +59,11 @@ export class DisplayNotes extends Component {
     });
   };
   handleClose = () => {
-    let data ={
-      noteId:this.state.id,
-      title:this.state.title,
-      description:this.state.description
-    }
+    let data = {
+      noteId: this.state.id,
+      title: this.state.title,
+      description: this.state.description,
+    };
     service
       .UpdateNotes(data)
       .then((res) => {
@@ -71,34 +75,102 @@ export class DisplayNotes extends Component {
         console.log(err);
       });
   };
-    handleCancel=()=>{
-      this.setState({
-        collaboratorOpen:false,
-        openStatus: false,
-      });
-    }
-  // handleCollab = () => {
-  //   if (this.props.noteString === "create") {
-  //     console.log("createnote")
-  //     this.props.collaborator();
-  //   } else  {
-  //     console.log("herecollab")
-  //     this.handleCollaborator();
-  //   }
-  // };
-  handleCollaborator = () => {
-    if (this.props.noteString === "create") {
-          console.log("createnote")
-           this.props.collaborator();
-    }else{
+  handleCancel = () => {
     this.setState({
-      collaboratorOpen: true,
+      collaboratorOpen: false,
+      openStatus: false,
     });
-  }
   };
-  
+  handleSearchChange = (e) => {
+    this.setState({
+      openPopper: true,
+      anchorEl: e.currentTarget,
+    });
+
+    let data = {
+      searchWord: e.target.value,
+    };
+    service
+      .SearchUserList(data)
+      .then((res) => {
+        this.setState({
+          usersList: res.data.data.details,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  handleCollaborator = (note) => {
+    this.setState({
+      id: note.id,
+      collaboratorOpen: true,
+      collaborators: note.collaborators,
+    });
+  };
+  handleAddUser = (val) => {
+    let data = val;
+    service
+      .AddCollaborator(this.state.id, data)
+      .then((res) => {
+        this.handleSave();
+      })
+      .catch((err) => {
+        console.log("collab", err);
+      });
+  };
+  handleSave = () => {
+    this.setState({
+      collaboratorOpen: false,
+      openPopper: false,
+      anchorEl: null,
+    });
+    this.props.get();
+  };
+
+  displayCollaborator = (collaborators) => {
+    if (collaborators.length > 0) {
+      let displayCol = [];
+      for (let i = 0; i < collaborators.length; i++) {
+        let firstLetter = collaborators[i].firstName.charAt(0).toUpperCase();
+        displayCol.push(
+          <span
+            key={i}
+            className="collab-profile"
+            title={collaborators[i].email}
+            style={{
+              backgroundColor:"rgb(77, 20, 20)",
+              border: "3px solid #a0a0a0",
+              borderRadius: "100%",
+              color: "#fff",
+              padding: "3px 9px",
+              fontFamily: " Roboto,Arial,sans-serif",
+            }}
+          >
+            {firstLetter}
+          </span>
+        );
+      }
+      return (
+        <div style={{ marginTop: "10px", display: "flex", flexWrap: "wrap" }}>
+          {displayCol}
+        </div>
+      );
+    } else {
+      return <div></div>;
+    }
+  };
 
   render() {
+    const searchList = this.state.usersList.map((val, ind) => {
+      return (
+        <List key={ind} onClick={() => this.handleAddUser(val)}>
+          {val.email}
+        </List>
+      );
+    });
+
     return (
       <div>
         <div className="note-containerr">
@@ -117,9 +189,12 @@ export class DisplayNotes extends Component {
                 {val.title}
               </h1>
               <p> {val.description}</p>
-              <div className="showicons">
+
+              {this.displayCollaborator(val.collaborators)}
+              <div  className="showicons">
                 <IconButton
-                  collaboratorOpen={this.handleCollaborator}
+                  className="s-icons"
+                  handleCollaborator={this.handleCollaborator}
                   collabOpen={this.state.collaboratorOpen}
                   notestring="update"
                   note={val}
@@ -135,9 +210,7 @@ export class DisplayNotes extends Component {
           fullWidth
           aria-labelledby="responsive-dialog-title"
           id="responsive-dialog-title"
-          style={{ backgroundColor: "none", 
-          zIndex: 2
-        }}
+          style={{ backgroundColor: "none", zIndex: 2 }}
         >
           <div
             style={{
@@ -146,24 +219,39 @@ export class DisplayNotes extends Component {
               padding: "10px",
             }}
           >
-           < TextareaAutosize style={{resize:'none',backgroundColor: this.state.color,
-           border: 'none',fontSize:'20px',fontFamily:' Roboto,Arial,sans-serif',}}
+            <TextareaAutosize
+              style={{
+                resize: "none",
+                backgroundColor: this.state.color,
+                border: "none",
+                fontSize: "20px",
+                fontFamily: " Roboto,Arial,sans-serif",
+              }}
               name="title"
               className="dianote-title"
               defaultValue={this.state.title}
               onChange={this.handleTitleChange}
-            /><br></br>
-            <TextareaAutosize style={{resize:'none',backgroundColor: this.state.color, border: 'none',fontSize:'20px',fontFamily:' Roboto,Arial,sans-serif'}}
-                name="description"
-                className="dianote-desc"
-                defaultValue={this.state.description}
-                onChange={this.handleDescriptionChange}
-              />
+            />
+            <br></br>
+            <TextareaAutosize
+              style={{
+                resize: "none",
+                backgroundColor: this.state.color,
+                border: "none",
+                fontSize: "20px",
+                fontFamily: " Roboto,Arial,sans-serif",
+              }}
+              name="description"
+              className="dianote-desc"
+              defaultValue={this.state.description}
+              onChange={this.handleDescriptionChange}
+            />
+
             <div className="icon-close">
               <div className="icon-btn">
-                <IconButton 
+                <IconButton
                   // note={val}
-                   get={this.props.get}
+                  get={this.props.get}
                 />
               </div>
               <Button onClick={this.handleClose}>Close</Button>
@@ -172,22 +260,20 @@ export class DisplayNotes extends Component {
         </Dialog>
         {/*,<----------------------------------- collaborator ------------------------------------------> */}
         <Dialog
-          className="dialog-box"
+          className="collab-dialog-box"
           open={this.state.collaboratorOpen}
           fullWidth
           aria-labelledby="responsive-collab-dialog-title"
-          style={{ backgroundColor: "none"}}
+          style={{ backgroundColor: "none", zIndex: 2 }}
         >
-          <DialogTitle >
-            Collaborators
-          </DialogTitle>
+          <DialogTitle>Collaborators</DialogTitle>
           <Divider light />
           <DialogContent>
             <div>
-              <div className="partfirst">
+              <div className="first">
                 <AccountIcon fontSize="large" className="owner-icon" />
                 <div>
-                  <div classname='oname'> 
+                  <div classname="oname">
                     <h3 className="owner-name">Shalini Pandey</h3>
                     <span>(Owner)</span>
                   </div>
@@ -195,8 +281,8 @@ export class DisplayNotes extends Component {
                 </div>
               </div>
             </div>
-           
-            <div className="partsecond">
+
+            <div className="second">
               <div className="collab-add-icon">
                 <PersonAddIcon />
               </div>
@@ -204,12 +290,30 @@ export class DisplayNotes extends Component {
                 type="email"
                 className="collab-input"
                 placeholder="Person or email to share with"
+                onChange={this.handleSearchChange}
               />
             </div>
+            <Popper
+              open={this.state.openPopper}
+              anchorEl={this.state.anchorEl}
+              placement="bottom-start"
+              transition
+              style={{ zIndex: 20, marginTop: "450px", width: "250px" }}
+            >
+              <Paper
+                className="collab-popper"
+                style={{ padding: "10px", boxShadow: "1px 1px 5px #888" }}
+              >
+                {searchList}
+              </Paper>
+            </Popper>
           </DialogContent>
           <Divider light />
-          <DialogActions className="cancelsave-btns" style={{backgroundColor:'#ebebeb',height:'50px'}}>
-            <div >
+          <DialogActions
+            className="cancelsave-btns"
+            style={{ backgroundColor: "#ebebeb", height: "50px" }}
+          >
+            <div>
               <button className="action-btn" onClick={this.handleCancel}>
                 Cancel
               </button>

@@ -45,9 +45,9 @@ export class NotesContainer extends Component {
     return (
       <DashBoard>
         <CreateNote get={this.getANote} notes={this.state.notes} />
-            <Route  path="/fundooKeep/notes" component={props => <DisplayNotes {...props} notes={this.state.notes} get={this.getANote} />}></Route>
-            <Route  path="/fundooKeep/archive" component={Archive}></Route>
-            <Route  path="/fundooKeep/trash" component={Trash}></Route>
+        <Route  path="/fundooKeep/notes" component={props => <DisplayNotes {...props} notes={this.state.notes} get={this.getANote} />}></Route>
+        <Route  path="/fundooKeep/archive" component={Archive}></Route>
+        <Route  path="/fundooKeep/trash" component={Trash}></Route>
       </DashBoard> 
     );
   }

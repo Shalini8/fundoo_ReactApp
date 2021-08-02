@@ -22,9 +22,21 @@ class UserService {
         return axiosservice.postMethod(`${baseUrl}/user/reset-password`,data,config)
     }
     AddNote = (data) => {
-        return axiosservice.postMethod(`${baseUrl}notes/addNotes`, data, config)
+        let configFile = {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              Authorization: localStorage.getItem("token"),
+            },
+          };
+        return axiosservice.postMethod(`${baseUrl}notes/addNotes`, data, configFile)
     }
     GetNote = () => {
+        let config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': localStorage.getItem('token')
+            }
+        }
         return axiosservice.getMethod(`${baseUrl}notes/getNotesList`,  config)
 
     }
@@ -48,7 +60,12 @@ class UserService {
     GetTrashNotesList = () => {
         return axiosservice.getMethod(`${baseUrl}notes/getTrashNotesList`, config);
       };
+      SearchUserList = (data) => {
+        return axiosservice.postMethod(`${baseUrl}user/searchUserList`,data,config);
+      };
     
+      AddCollaborator = (id, data) => {return axiosservice.postMethod(`${baseUrl}notes/${id}/AddcollaboratorsNotes`, data,config);
+      };
     
     
     }

@@ -37,10 +37,9 @@ export class IconButton extends Component {
   };
   onClickChoosecolor = (e) => {
     this.setState({
-     open: false,
+      open: false,
     });
   };
- 
 
   onClickChangeColor = (color) => {
     if (this.props.noteString === "create") {
@@ -55,7 +54,7 @@ export class IconButton extends Component {
         .then((res) => {
           console.log(res);
           this.props.get();
-          this.onClickChoosecolor(this.onClickChangeColor)
+          this.onClickChoosecolor(this.onClickChangeColor);
         })
         .catch((err) => {
           console.log(err);
@@ -95,18 +94,22 @@ export class IconButton extends Component {
         .then((res) => {
           console.log(res);
           this.props.get();
-          this.onClickmoreOptions(this.onDelete)
-
+          this.onClickmoreOptions(this.onDelete);
         })
         .catch((err) => {
           console.log(err);
         });
     }
   };
-  
-  
-  
-  
+  handleCollaborator = () => {
+    if (this.props.noteString === "create") {
+      console.log("collabopennn");
+      this.props.collab();
+    } else {
+      this.props.handleCollaborator(this.props.note);
+    }
+  };
+
   render() {
     const colorbtn = [
       { title: "Default", name: "#ffffff" },
@@ -191,28 +194,28 @@ export class IconButton extends Component {
           )}
         </Popper>
         <div className="ic-btn">
-        <AddAlertIcon title="RemindMe" className="btn-icon" />
-        <CollaboratorIcon
-          title="Collaborator"
-          className="btn-icon"
-          onClick={this.props.collaboratorOpen}
-        />
-        <ColorLensIcon
-          title="Change Color"
-          className="btn-icon"
-          onClick={this.handleClick}
-        />
-        <PhotoIcon title="Add image" className="btn-icon" />
-        <ArchiveIcon
-          title="Archive"
-          className="btn-icon"
-          onClick={this.onArchive}
-        />
-        <MoreIcon
-          title="More"
-          className="btn-icon"
-          onClick={this.onClickmoreOptions}
-        />
+          <AddAlertIcon title="RemindMe" className="btn-icon" />
+          <CollaboratorIcon
+            title="Collaborator"
+            className="btn-icon"
+            onClick={this.handleCollaborator}
+          />
+          <ColorLensIcon
+            title="Change Color"
+            className="btn-icon"
+            onClick={this.handleClick}
+          />
+          <PhotoIcon title="Add image" className="btn-icon" />
+          <ArchiveIcon
+            title="Archive"
+            className="btn-icon"
+            onClick={this.onArchive}
+          />
+          <MoreIcon
+            title="More"
+            className="btn-icon"
+            onClick={this.onClickmoreOptions}
+          />
         </div>
       </div>
     );

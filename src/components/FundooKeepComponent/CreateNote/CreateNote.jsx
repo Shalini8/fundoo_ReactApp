@@ -10,7 +10,21 @@ import BrushIcon from "@material-ui/icons/Brush";
 import ImageOutlinedIcon from "@material-ui/icons/ImageOutlined";
 import "../CreateNote/CreateNote.css";
 import IconButton from "../IconButton/IconButton";
-import TextareaAutosize from '@material-ui/core/TextareaAutosize';
+import "../DisplayNotes/DisplayNotes.css";
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Divider,
+  Popper,
+  Paper,
+  List,
+} from "@material-ui/core";
+import AccountIcon from "@material-ui/icons/AccountCircleOutlined";
+import PersonAddIcon from "@material-ui/icons/PersonAddOutlined";
+import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 
 import UserService from "../../../services/UserService";
 const service = new UserService();
@@ -26,8 +40,9 @@ export default class CreateNote extends React.Component {
       color: "#ffffff",
       isArchived: false,
       isDeleted: false,
-      collaboratorOpen: false,
-
+      openPopper: false,
+      collabOpen: false,
+      usersList: [],
     };
   }
   changeHandler = (e) => {
@@ -36,23 +51,31 @@ export default class CreateNote extends React.Component {
     });
     console.log(this.state.title);
   };
- 
-   handleOnClick = () => {
+
+  handleOnClick = () => {
     if (!this.state.showContent) {
       this.setState({ showContent: true });
     }
   };
-  
-  
 
-  addEvent = () => {
-  let data = {
-      title: this.state.title,
-      description: this.state.description,
-      color: this.state.color,
-      isArchived: this.state.isArchived,
-      isDeleted:this.state.isDeleted,
-    };
+  addEvent = (val) => {
+    console.log(JSON.stringify([val]))
+    const data = new FormData();
+    data.append("title", this.state.title);
+    data.append("description", this.state.description);
+    data.append("color", this.state.color);
+    data.append("isArchived", this.state.isArchived);
+    data.append("isDeleted", this.state.isDeleted);
+    data.append("collaberators", JSON.stringify([val]));
+
+    // let data = {
+    //   title: this.state.title,
+    //   description: this.state.description,
+    //   color: this.state.color,
+    //   isArchived: this.state.isArchived,
+    //   isDeleted: this.state.isDeleted,
+    //   collaberators:[val]
+    // };
 
     service
       .AddNote(data)
@@ -64,18 +87,18 @@ export default class CreateNote extends React.Component {
           showContent: false,
           title: "",
           description: "",
-          
         });
+        this.onSave();
       })
       .catch((err) => {
         console.log(err);
       });
   };
-  create =(color)=>{
+  create = (color) => {
     this.setState({
-      color: color
-    })
-  }
+      color: color,
+    });
+  };
   handleArchive = () => {
     this.setState({
       isArchived: true,
@@ -88,21 +111,65 @@ export default class CreateNote extends React.Component {
   };
   collaboratorDialog = () => {
     this.setState({
-      collaboratorOpen: true,
+      collabOpen: true,
     });
   };
-  
+  onSave = () => {
+    this.setState({
+      collabOpen: false,
+    });
+  };
+
+  onCancel = () => {
+    this.setState({
+      collabOpen: false,
+    });
+  };
+
+  handleSearchChange = (e) => {
+    this.setState({
+      openPopper: true,
+      anchorEl: e.currentTarget,
+    });
+    let data = {
+      searchWord: e.target.value,
+    };
+    service
+      .SearchUserList(data)
+      .then((res) => {
+        this.setState({
+          usersList: res.data.data.details,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  searchingList = () => {
+    const searchList = this.state.usersList.map((val, ind) => {
+      return (
+        <List key={ind} onClick={() => this.addEvent(val)}>
+          {val.email}
+        </List>
+      );
+    });
+    return searchList;
+  };
 
   render() {
     return (
       <div className="card-container">
-        <div 
+        <div
           onClick={this.handleOnClick}
-          style={{ display: this.state.showContent ? "none" : "flex",width:'100%',justifyContent:'center' }}
+          style={{
+            display: this.state.showContent ? "none" : "flex",
+            width: "100%",
+            justifyContent: "center",
+          }}
         >
           <Card className="input-card card-shadow" variant="outlined">
             <CardContent>
-              <Grid className = 'takenote'>
+              <Grid className="takenote">
                 <input
                   className="title"
                   type="text"
@@ -118,20 +185,40 @@ export default class CreateNote extends React.Component {
           </Card>
         </div>
         <div
-          style={{ display: this.state.showContent ? "flex" : "none" , width: "100%", justifyContent:'center', backgroundColor: this.props.notes.color}}
+          style={{
+            display: this.state.showContent ? "flex" : "none",
+            width: "100%",
+            justifyContent: "center",
+            backgroundColor: this.props.notes.color,
+          }}
           onClick={this.handleOnClick}
         >
-          <Card className="input-card card-shadow" variant="outlined" style={{ backgroundColor: this.state.color }}>
-            <CardContent >
-              <TextareaAutosize style={{resize:'none',width:'100%',backgroundColor: this.state.color,fontFamily:' Roboto,Arial,sans-serif'}}
+          <Card
+            className="input-card card-shadow"
+            variant="outlined"
+            style={{ backgroundColor: this.state.color }}
+          >
+            <CardContent>
+              <TextareaAutosize
+                style={{
+                  resize: "none",
+                  width: "100%",
+                  backgroundColor: this.state.color,
+                  fontFamily: " Roboto,Arial,sans-serif",
+                }}
                 className="title"
                 name="title"
                 value={this.state.title}
                 onChange={(e) => this.changeHandler(e)}
                 placeholder="Title"
               />
-              <TextareaAutosize style={{resize:'none',backgroundColor: this.state.color,fontFamily:' Roboto,Arial,sans-serif'}}
-                className="title"
+              <TextareaAutosize
+                style={{
+                  resize: "none",
+                  backgroundColor: this.state.color,
+                  fontFamily: " Roboto,Arial,sans-serif",
+                }}
+                className="title2"
                 name="description"
                 value={this.state.description}
                 onChange={(e) => this.changeHandler(e)}
@@ -140,24 +227,88 @@ export default class CreateNote extends React.Component {
             </CardContent>
             <div className="icon-close">
               <div className="iconbtn">
-                <IconButton  
-                noteString='create'
-                color={this.create}
-                // get={this.props.get}
-                note={this.props.notes}
-                addnote={this.state.addEvent}
-                archive={this.handleArchive}
-                delete={this.handleDelete}
-                collaborator={this.collaboratorDialog}
-
+                <IconButton
+                  noteString="create"
+                  color={this.create}
+                  // get={this.props.get}
+                  note={this.props.notes}
+                  addnote={this.state.addEvent}
+                  archive={this.handleArchive}
+                  delete={this.handleDelete}
+                  collab={this.collaboratorDialog}
                 />
               </div>
-              <Button onClick={this.addEvent} size="small">
+              <Button className="action-btn" onClick={this.addEvent} size="small">
                 Close
               </Button>
             </div>
           </Card>
         </div>
+        {/*,<----------------------------------- collaborator ------------------------------------------> */}
+        <Dialog
+          className="collab-dialog-box"
+          open={this.state.collabOpen}
+          fullWidth
+          aria-labelledby="responsive-collab-dialog-title"
+          style={{ backgroundColor: "none", zIndex: 2 }}
+        >
+          <DialogTitle>Collaborators</DialogTitle>
+          <Divider light />
+          <DialogContent>
+            <div>
+              <div className="first">
+                <AccountIcon fontSize="large" className="owner-icon" />
+                <div>
+                  <div classname="oname">
+                    <h3 className="owner-name">Shalini Pandey</h3>
+                    <span>(Owner)</span>
+                  </div>
+                  <p className="owner-tag">shalu8mar@gmail.com</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="second">
+              <div className="collab-add-icon">
+                <PersonAddIcon />
+              </div>
+              <input
+                type="email"
+                className="collab-input"
+                placeholder="Person or email to share with"
+                onChange={this.handleSearchChange}
+              />
+            </div>
+            <Popper
+              open={this.state.openPopper}
+              anchorEl={this.state.anchorEl}
+              placement="bottom-start"
+              transition
+              style={{ zIndex: 20, marginTop: "450px", width: "250px" }}
+            >
+              <Paper
+                className="collab-popper"
+                style={{ padding: "10px", boxShadow: "1px 1px 5px #888" }}
+              >
+                {this.searchingList()}
+              </Paper>
+            </Popper>
+          </DialogContent>
+          <Divider light />
+          <DialogActions
+            className="cancelsave-btns"
+            style={{ backgroundColor: "#ebebeb", height: "50px" }}
+          >
+            <div>
+              <button className="action-btn" onClick={this.onCancel}>
+                Cancel
+              </button>
+              <button className="action-btn" onClick={this.onSave}>
+                Save
+              </button>
+            </div>
+          </DialogActions>
+        </Dialog>
       </div>
     );
   }

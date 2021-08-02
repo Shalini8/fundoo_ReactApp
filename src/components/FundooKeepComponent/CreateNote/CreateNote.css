@@ -32,6 +32,37 @@
     justify-content: space-between;
 
 }
+.title {
+    border: none;
+    font-size: 18px;
+    height: 50px;
+  }
+  .title2{
+    border: none;
+    font-size: 15px;
+    height: 50px;
+  
+  }
+  
+  .title:focus-visible {
+    border: none;
+    font-size: 18px;
+    outline: none;
+  }
+  .title2:focus-visible {
+    border: none;
+    font-size: 15px;
+    outline: none;
+  }
+.action-btn {
+    border: none;
+    font-size: 16px;
+    padding: 10px 30px;
+}
+
+.action-btn:hover {
+    background-color: #9797971a;
+}
 @media only screen and (max-width :500px){
     .takenote{
         flex-direction: column;

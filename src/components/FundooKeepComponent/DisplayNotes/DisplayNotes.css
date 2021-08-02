@@ -1,6 +1,7 @@
 .note{
    padding: 10px;
     width: 300px;
+    height: fit-content;
     margin-top: 50px;
     border: 1px solid #ccc;
     border-radius: 10px;
@@ -30,11 +31,11 @@
 }
 .showicons{
     display: none;
+    width: 100%;
 }
 .note:hover >.showicons{
     display: block;
-    
-    }
+ }
 .icon-close{
     display: flex;
     padding: 5px;
@@ -50,8 +51,204 @@
 .oname{
     display: flex;
 }
-.partsecond{
+
+.collab-dialog-box {
+    width: 100%;
+    padding: 30px;
+    padding-top: 80px;
+
+}
+
+.first,
+.second {
     display: flex;
+}
+
+.first {
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.second {
+    padding: 3px;
+    margin-bottom: 30px;
+}
+
+.collab-input {
+    border: none;
+    width: 100%;
+    padding: 10px;
+    font-family: sans-serif;
+}
+
+.collab-input:focus {
+    outline: none;
+}
+
+.collab-add-icon {
+    padding: 4px 7px;
+    border: 1px solid #000;
+    border-radius: 100%;
+    margin-right: 20px;
+}
+
+.owner-icon {
+    margin-top: 4px;
+    margin-right: 20px;
+}
+
+.owner-name {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 900;
+    letter-spacing: 1px;
+}
+
+.owner-tag {
+    line-height: 0.5;
+    margin: 0;
+    font-size: 12px;
+    letter-spacing: 0;
+    color: #818181;
+}
+
+.collab-btns {
+    background-color: rgba(0, 0, 0, 0.07);
+    color: #000;
+}
+
+.collab-profile {
+    margin: 5px;
+    margin-left: 0;
+}
+
+.action-btn {
+    border: none;
+    font-size: 16px;
+    padding: 10px 30px;
+}
+
+.action-btn:hover {
+    background-color: #9797971a;
+}
+
+
+
+
+@media only screen and (max-width:1110px) {
+    .displaynotes {
+        padding: 6%;
+        padding-top: 0;
+    }
+
+    .note-div {
+        width: 245px;
+    }
+}
+
+@media only screen and (max-width:999px) {
+
+    .card-content {
+        padding: 0;
+    }
+
+    .displaynotes {
+        padding: 5%;
+        padding-top: 0;
+    }
+
+    .note-div {
+        width: 235px;
+    }
+
+}
+
+@media only screen and (max-width:880px) {
+    
+    .collab-dialog-box {
+        margin-left: 30px;
+
+    }
+
+
+    .collabs-list {
+        width: 100%;
+    }
+
+    .first {
+        width: 400px;
+    }
+
+
+}
+
+@media only screen and (max-width:790px) {
+    .note-div {
+        width: 100%;
+    }
+
+    .note-card {
+        margin: 0;
+    }
+
+    .displaynotes {
+        padding-left: 10%;
+        width: 100%;
+        height: 200px;
+    }
+
+    .note-image {
+        width: 60%;
+    }
+
+    .dialog-box {
+        width: 100%;
+        margin-left: 20px;
+        padding-left: 50px;
+    }
+}
+
+@media only screen and (max-width:599px) {
+
+    .first {
+        width: 300px;
+    }
+
+    .displaynotes {
+        padding-left: 50px;
+    }
+}
+
+@media only screen and (max-width:499px) {
+    .first {
+        width: 220px;
+    }
+}
+
+@media only screen and (max-width:400px) {
+
+    .note {
+        width: 100%;
+        padding: 10px;
+    }
+
+    .displaynotes {
+        width: 100%;
+    }
+
+    .collab-dialog-box {
+        margin-left: 10px;
+        padding-right: 10px;
+        margin-right: 0;
+    }
+
+    .first {
+        width: 200px;
+    }
+
+    .card-content {
+        padding: 0;
+    }
 
 }
 
