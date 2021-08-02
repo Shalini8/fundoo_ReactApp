@@ -28,6 +28,7 @@ import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 
 import UserService from "../../../services/UserService";
 const service = new UserService();
+let collab;
 
 export default class CreateNote extends React.Component {
   constructor(props) {
@@ -58,42 +59,49 @@ export default class CreateNote extends React.Component {
     }
   };
 
-  addEvent = (val) => {
-    console.log(JSON.stringify([val]))
+  handleOnClose = () => {
     const data = new FormData();
-    data.append("title", this.state.title);
+   data.append("title", this.state.title);
     data.append("description", this.state.description);
-    data.append("color", this.state.color);
-    data.append("isArchived", this.state.isArchived);
-    data.append("isDeleted", this.state.isDeleted);
-    data.append("collaberators", JSON.stringify([val]));
 
-    // let data = {
-    //   title: this.state.title,
-    //   description: this.state.description,
-    //   color: this.state.color,
-    //   isArchived: this.state.isArchived,
-    //   isDeleted: this.state.isDeleted,
-    //   collaberators:[val]
-    // };
+    if (this.state.color !== "") {
+      data.append("color", this.state.color);
+    }
+    if (this.state.isArchived !== "") {
+      data.append("isArchived", this.state.isArchived);
+    }
+    if (this.state.isDeleted !== "") {
+      data.append("isDeleted", this.state.isDeleted);
+    }
+    if (collab !== "") {
+      data.append("collaberators", JSON.stringify([collab]));
+    }
 
     service
       .AddNote(data)
       .then((res) => {
-        this.props.get();
         console.log(res);
+        this.props.get();
         this.setState({
           color: "#ffffff",
           showContent: false,
           title: "",
           description: "",
+          isArchived: false,
+          isDeleted: false,
+          image: "",
+          collabOpen: false,
+          collaborator: "",
+          collaborators: [],
+          usersList: [],
         });
-        this.onSave();
+        collab = null;
       })
       .catch((err) => {
         console.log(err);
       });
   };
+
   create = (color) => {
     this.setState({
       color: color,
@@ -125,6 +133,10 @@ export default class CreateNote extends React.Component {
       collabOpen: false,
     });
   };
+  addUser = (val) => {
+    collab = val;
+    this.handleOnClose();
+  };
 
   handleSearchChange = (e) => {
     this.setState({
@@ -148,7 +160,7 @@ export default class CreateNote extends React.Component {
   searchingList = () => {
     const searchList = this.state.usersList.map((val, ind) => {
       return (
-        <List key={ind} onClick={() => this.addEvent(val)}>
+        <List key={ind} onClick={() => this.addUser(val)}>
           {val.email}
         </List>
       );
@@ -238,7 +250,11 @@ export default class CreateNote extends React.Component {
                   collab={this.collaboratorDialog}
                 />
               </div>
-              <Button className="action-btn" onClick={this.addEvent} size="small">
+              <Button
+                className="action-btn"
+                onClick={this.handleOnClose}
+                size="small"
+              >
                 Close
               </Button>
             </div>

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import "../DisplayNotes/DisplayNotes.css";
+import IconButton from '../IconButton/IconButton';
 
 import UserService from '../../../services/UserService';
 const service = new UserService();
@@ -41,6 +42,9 @@ export class Archive extends Component {
                {val.title}
             </h1>
             <p> {val.description}</p>
+            <div className="showicons">
+            <IconButton />
+            </div>
             </div>
               ))}
            

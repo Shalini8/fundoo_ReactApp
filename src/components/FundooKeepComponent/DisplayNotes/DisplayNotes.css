@@ -208,6 +208,28 @@
     }
 }
 
+
+
+
+@media only screen and (max-width :1020px){
+    .note{
+        width: 260px;
+    }
+}
+@media only screen and (max-width :650px){
+    .note{
+        width: 100%;
+    }
+    .dialog-box{
+        margin-left: 10%;
+        
+    }
+    .icon-btn{
+        margin: 0;
+        padding: 0;
+        width: 180px;
+    }
+}
 @media only screen and (max-width:599px) {
 
     .first {
@@ -250,25 +272,4 @@
         padding: 0;
     }
 
-}
-
-
-@media only screen and (max-width :1020px){
-    .note{
-        width: 260px;
-    }
-}
-@media only screen and (max-width :650px){
-    .note{
-        width: 100%;
-    }
-    .dialog-box{
-        margin-left: 10%;
-        
-    }
-    .icon-btn{
-        margin: 0;
-        padding: 0;
-        width: 180px;
-    }
 }

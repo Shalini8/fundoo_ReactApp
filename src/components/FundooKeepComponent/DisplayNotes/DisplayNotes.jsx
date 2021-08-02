@@ -140,8 +140,8 @@ export class DisplayNotes extends Component {
             className="collab-profile"
             title={collaborators[i].email}
             style={{
-              backgroundColor:"rgb(77, 20, 20)",
-              border: "3px solid #a0a0a0",
+              backgroundColor: "rgb(77, 20, 20)",
+              border: "1.5px solid #a0a0a0",
               borderRadius: "100%",
               color: "#fff",
               padding: "3px 9px",
@@ -191,7 +191,7 @@ export class DisplayNotes extends Component {
               <p> {val.description}</p>
 
               {this.displayCollaborator(val.collaborators)}
-              <div  className="showicons">
+              <div className="showicons">
                 <IconButton
                   className="s-icons"
                   handleCollaborator={this.handleCollaborator}
