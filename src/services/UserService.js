@@ -66,7 +66,7 @@ class UserService {
     
       AddCollaborator = (id, data) => {return axiosservice.postMethod(`${baseUrl}notes/${id}/AddcollaboratorsNotes`, data,config);
       };
-    
+      
     
     }
    

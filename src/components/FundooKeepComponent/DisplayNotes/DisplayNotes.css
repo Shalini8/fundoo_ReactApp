@@ -41,7 +41,8 @@
     padding: 5px;
 }
 .icon-btn{
-    width: 70%;
+    width: 240px;
+    overflow: hidden;
 }
 .dianote-title,.dianote-desc:focus-visible{
     border: none;
@@ -91,6 +92,9 @@
     border-radius: 100%;
     margin-right: 20px;
 }
+/* .dialog-box{
+    width: 100%;
+} */
 
 .owner-icon {
     margin-top: 4px;
@@ -132,7 +136,13 @@
     background-color: #9797971a;
 }
 
-
+.del-email{
+    display: flex;
+    justify-content: space-between;
+}
+.remove-btn{
+    margin-left: 300px;
+}
 
 
 @media only screen and (max-width:1110px) {
@@ -182,35 +192,6 @@
 
 }
 
-@media only screen and (max-width:790px) {
-    .note-div {
-        width: 100%;
-    }
-
-    .note-card {
-        margin: 0;
-    }
-
-    .displaynotes {
-        padding-left: 10%;
-        width: 100%;
-        height: 200px;
-    }
-
-    .note-image {
-        width: 60%;
-    }
-
-    .dialog-box {
-        width: 100%;
-        margin-left: 20px;
-        padding-left: 50px;
-    }
-}
-
-
-
-
 @media only screen and (max-width :1020px){
     .note{
         width: 260px;
@@ -229,6 +210,9 @@
         padding: 0;
         width: 180px;
     }
+    .remove-btn{
+        margin-left: 200px;
+    }
 }
 @media only screen and (max-width:599px) {
 
@@ -239,11 +223,18 @@
     .displaynotes {
         padding-left: 50px;
     }
+    
+    .remove-btn{
+        margin-left: 150px;
+    }
 }
 
 @media only screen and (max-width:499px) {
     .first {
         width: 220px;
+    }
+    .remove-btn{
+        margin-left: 60px;
     }
 }
 
@@ -253,11 +244,6 @@
         width: 100%;
         padding: 10px;
     }
-
-    .displaynotes {
-        width: 100%;
-    }
-
     .collab-dialog-box {
         margin-left: 10px;
         padding-right: 10px;
@@ -270,6 +256,9 @@
 
     .card-content {
         padding: 0;
+    }
+    .remove-btn{
+        margin-left: 10px;
     }
 
 }

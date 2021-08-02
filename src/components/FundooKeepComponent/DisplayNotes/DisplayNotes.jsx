@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import IconButton from "../IconButton/IconButton";
 import "../DisplayNotes/DisplayNotes.css";
+import deleteImg from "./delete.svg";
+
 import {
   Button,
   Dialog,
@@ -105,6 +107,7 @@ export class DisplayNotes extends Component {
   handleCollaborator = (note) => {
     this.setState({
       id: note.id,
+      openPopper: false,
       collaboratorOpen: true,
       collaborators: note.collaborators,
     });
@@ -161,6 +164,48 @@ export class DisplayNotes extends Component {
       return <div></div>;
     }
   };
+  collabsOnCollabBox = (collabs) => {
+    if (collabs.length > 0) {
+      let dis = [];
+      for (let i = 0; i < collabs.length; i++) {
+        let firstLetter = collabs[i].firstName.charAt(0).toUpperCase();
+
+        dis.push(
+          <div className="collabs-list" key={i}>
+            <div className="first">
+              <span
+                className="collab-profile"
+                style={{
+                  border: "3px solid #000",
+                  borderRadius: "100%",
+                  color: "#000",
+                  fontWeight: "bold",
+                  padding: "3px 9px",
+                  fontFamily: "serif",
+                }}
+              >
+                {firstLetter}
+              </span>
+              <div>
+                <div>
+                  <b className="owner-name">
+                    {collabs[i].firstName} {collabs[i].lastName}
+                  </b>
+                </div>
+                <p className="owner-tag">{collabs[i].email}</p>
+              </div>
+              <div className="remove-btn">
+                <img src={deleteImg} alt="collab-remove" />
+              </div>
+            </div>
+          </div>
+        );
+      }
+      return <div>{dis}</div>;
+    } else {
+      return <div></div>;
+    }
+  };
 
   render() {
     const searchList = this.state.usersList.map((val, ind) => {
@@ -204,6 +249,7 @@ export class DisplayNotes extends Component {
             </div>
           ))}
         </div>
+        {/* -------------- update dialogbox----------------------- */}
         <Dialog
           className="dialog-box"
           open={this.state.openStatus}
@@ -246,6 +292,7 @@ export class DisplayNotes extends Component {
               defaultValue={this.state.description}
               onChange={this.handleDescriptionChange}
             />
+            {this.displayCollaborator(this.state.collaborators)}
 
             <div className="icon-close">
               <div className="icon-btn">
@@ -279,6 +326,9 @@ export class DisplayNotes extends Component {
                   </div>
                   <p className="owner-tag">shalu8mar@gmail.com</p>
                 </div>
+              </div>
+              <div className="first">
+                {this.collabsOnCollabBox(this.state.collaborators)}
               </div>
             </div>
 

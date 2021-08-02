@@ -120,16 +120,19 @@ export default class CreateNote extends React.Component {
   collaboratorDialog = () => {
     this.setState({
       collabOpen: true,
+      openPopper:false
     });
   };
   onSave = () => {
     this.setState({
+      openPopper:false,
       collabOpen: false,
     });
   };
 
   onCancel = () => {
     this.setState({
+      openPopper:false,
       collabOpen: false,
     });
   };
