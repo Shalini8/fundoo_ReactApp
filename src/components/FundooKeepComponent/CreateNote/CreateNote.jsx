@@ -128,6 +128,7 @@ export default class CreateNote extends React.Component {
       openPopper:false,
       collabOpen: false,
     });
+    this.handleOnClose();
   };
 
   onCancel = () => {
@@ -138,7 +139,10 @@ export default class CreateNote extends React.Component {
   };
   addUser = (val) => {
     collab = val;
-    this.handleOnClose();
+    this.setState({
+      openPopper:false,
+    });
+
   };
 
   handleSearchChange = (e) => {

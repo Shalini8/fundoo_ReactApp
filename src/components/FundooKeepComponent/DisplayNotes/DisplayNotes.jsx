@@ -131,6 +131,19 @@ export class DisplayNotes extends Component {
     });
     this.props.get();
   };
+  deleteCollaborator = (val) => {
+    let userid = val.userId;
+    let id = this.state.id;
+    service
+      .RemoveCollaborator(id, userid)
+      .then((res) => {
+        console.log(res);
+        this.handleSave();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   displayCollaborator = (collaborators) => {
     if (collaborators.length > 0) {
@@ -195,7 +208,11 @@ export class DisplayNotes extends Component {
                 <p className="owner-tag">{collabs[i].email}</p>
               </div>
               <div className="remove-btn">
-                <img src={deleteImg} alt="collab-remove" />
+                <img
+                  src={deleteImg}
+                  alt="collab-remove"
+                  onClick={() => this.deleteCollaborator(collabs[i])}
+                />
               </div>
             </div>
           </div>

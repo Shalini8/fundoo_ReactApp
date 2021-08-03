@@ -67,7 +67,8 @@ class UserService {
       AddCollaborator = (id, data) => {return axiosservice.postMethod(`${baseUrl}notes/${id}/AddcollaboratorsNotes`, data,config);
       };
       
-    
+      RemoveCollaborator = (id, userId) => {return axiosservice.deleteMethod(`${baseUrl}notes/${id}/removeCollaboratorsNotes/${userId}`,config);
+    };
     }
    
    

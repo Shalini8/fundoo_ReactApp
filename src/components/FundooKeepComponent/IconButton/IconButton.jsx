@@ -33,11 +33,8 @@ export class IconButton extends Component {
   onClickmoreOptions = (e) => {
     this.setState({
       openOptions: !this.state.openOptions,
-    });
-  };
-  onClickChoosecolor = (e) => {
-    this.setState({
-      open: false,
+      anchorEl: e.currentTarget,
+      open:false
     });
   };
 
