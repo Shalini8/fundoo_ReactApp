@@ -8,6 +8,7 @@ import Trash from "./Trash/Trash";
 
 import { BrowserRouter as Router, Redirect } from "react-router-dom";
 import { Route, Switch, useHistory } from "react-router";
+import ProtectedRouter from "./ProtectedRoute/ProtectedRoute";
 
 const service = new UserService();
 
@@ -45,9 +46,9 @@ export class NotesContainer extends Component {
     return (
       <DashBoard>
         <CreateNote get={this.getANote} notes={this.state.notes} />
-        <Route  path="/fundooKeep/notes" component={props => <DisplayNotes {...props} notes={this.state.notes} get={this.getANote} />}></Route>
-        <Route  path="/fundooKeep/archive" component={Archive}></Route>
-        <Route  path="/fundooKeep/trash" component={Trash}></Route>
+        <ProtectedRouter  path="/fundooKeep/notes" component={props => <DisplayNotes {...props} notes={this.state.notes} get={this.getANote} />}></ProtectedRouter>
+        <ProtectedRouter  path="/fundooKeep/archive" component={Archive}></ProtectedRouter>
+        <ProtectedRouter  path="/fundooKeep/trash" component={Trash}></ProtectedRouter>
       </DashBoard> 
     );
   }

@@ -18,7 +18,7 @@ export class Trash extends Component {
           .GetTrashNotesList()
           .then((res) => {
             var reqnotes = res.data.data.data;
-            var noteArr = reqnotes.reverse();
+            var noteArr = reqnotes;
             this.setState({
               deletedNotes: noteArr,
             });

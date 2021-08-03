@@ -51,7 +51,7 @@ export class Signin extends Component {
         .then((res) => {
           console.log(res);
           localStorage.setItem("token", res.data.id);
-          this.props.history.push("/fundooKeep");
+          this.props.history.push("/fundooKeep/notes");
         })
         .catch((err) => {
           console.log(err);
