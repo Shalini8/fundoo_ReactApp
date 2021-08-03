@@ -1,4 +1,4 @@
-import React from "react";
+import React  from "react";
 import clsx from "clsx";
 import { fade, makeStyles, useTheme } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
@@ -25,6 +25,10 @@ import RefreshIcon from "@material-ui/icons/Refresh";
 import SettingsIcon from "@material-ui/icons/Settings";
 import ViewIcon from "@material-ui/icons/ViewStreamOutlined";
 import AppsIcon from "@material-ui/icons/Apps";
+import AccountIcon from "@material-ui/icons/AccountCircleOutlined";
+import { Button, Paper, Popper } from "@material-ui/core";
+
+
 import { Link, useHistory } from "react-router-dom";
 
 import { NotesContainer } from "../../FundooKeepComponent/FundooKeep";
@@ -170,6 +174,14 @@ export default function DashBoard(props) {
   const theme = useTheme();
   const history = useHistory();
   const [open, setOpen] = React.useState(false);
+  const [openProfile, setProfile] = React.useState(false);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+
+  const handleProfile = (e) => {
+    setAnchorEl(e.currentTarget);
+    setProfile(!openProfile);
+  };
 
   const handleDrawerOpen = () => {
     setOpen(open ? false : true);
@@ -222,11 +234,15 @@ export default function DashBoard(props) {
                 inputProps={{ "aria-label": "search" }}
               />
             </div>
-
+              
             <RefreshIcon className="ref-icon" />
             <ViewIcon className="view-icon" />
             <SettingsIcon className="setting-icon" />
             <AppsIcon className="app-icon" />
+            <AccountIcon className="app-icon" 
+            onClick={handleProfile} 
+            />
+            
           </Toolbar>
         </div>
       </AppBar>
@@ -295,6 +311,35 @@ export default function DashBoard(props) {
         <Divider />
       </Drawer>
       <div className="note-component">{props.children}</div>
+      <Popper
+        name="more"
+        open={openProfile}
+        anchorEl={anchorEl}
+        placement="bottom"
+        transition
+        style={{ zIndex: 10, right: 0, width: "200px" }}
+      >
+        {
+          <Paper className="logout-popper">
+            <div>
+              <AccountIcon fontSize="large" className='app-icon'/>
+              <h3>Shalini Pandey</h3>
+            </div>
+            <Divider />
+            <Button
+              style={{
+                backgroundColor: "#1976d2",
+                color: "#fff",
+                padding: "5px 10px",
+                fontWeight: "600",
+                margin: "20px",
+              }}
+            >
+              Logout
+            </Button>
+          </Paper>
+        }
+      </Popper>
     </div>
   );
 }

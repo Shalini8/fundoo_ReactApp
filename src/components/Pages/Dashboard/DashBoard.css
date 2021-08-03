@@ -74,6 +74,11 @@ EditIcon {
   color: rgba(0, 0, 0, 0.54);
   margin-left: 2%;
 }
+.acc-icon{
+  color: rgba(0, 0, 0, 0.54);
+  margin-left: 5%;
+
+}
 .close-icon {
   color: rgba(0, 0, 0, 0.54) !important;
   margin-left: 90%;
@@ -81,8 +86,9 @@ EditIcon {
 }
 .makeStyles-search-12 {
   width: 100% !important;
-  padding-left: 5%;
+  padding-left: 10%;
 }
+
 
 @media only screen and (max-width: 980px) {
   .custom-drawr .MuiDrawer-paper {
@@ -106,6 +112,11 @@ EditIcon {
   border: none;
   font-size: 18px;
   outline: none;
+}
+.logout-popper {
+  padding: 40px 30px;
+  text-align: center;
+  box-shadow: 1px 1px 5px #888888;
 }
 
 /* .card-shadow {
