@@ -46,7 +46,7 @@ export class NotesContainer extends Component {
     return (
       <DashBoard>
         <CreateNote get={this.getANote} notes={this.state.notes} />
-        <ProtectedRouter  path="/fundooKeep/notes" component={props => <DisplayNotes {...props} notes={this.state.notes} get={this.getANote} />}></ProtectedRouter>
+        <ProtectedRouter exact path="/fundooKeep/notes" component={props => <DisplayNotes {...props} notes={this.state.notes} get={this.getANote} />}></ProtectedRouter>
         <ProtectedRouter  path="/fundooKeep/archive" component={Archive}></ProtectedRouter>
         <ProtectedRouter  path="/fundooKeep/trash" component={Trash}></ProtectedRouter>
       </DashBoard> 

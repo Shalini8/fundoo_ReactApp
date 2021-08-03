@@ -69,6 +69,14 @@ class UserService {
       
       RemoveCollaborator = (id, userId) => {return axiosservice.deleteMethod(`${baseUrl}notes/${id}/removeCollaboratorsNotes/${userId}`,config);
     };
+    LogOut = () => {
+        let config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': localStorage.getItem('token')
+            }}
+        return axiosservice.postMethod(`${baseUrl}user/logout`,null, config);
+      };
     }
    
    

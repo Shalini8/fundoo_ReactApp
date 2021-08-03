@@ -138,7 +138,6 @@ export class DisplayNotes extends Component {
       .RemoveCollaborator(id, userid)
       .then((res) => {
         console.log(res);
-        this.handleSave();
       })
       .catch((err) => {
         console.log(err);

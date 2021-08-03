@@ -1,4 +1,4 @@
-import React  from "react";
+import React from "react";
 import clsx from "clsx";
 import { fade, makeStyles, useTheme } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
@@ -27,14 +27,11 @@ import ViewIcon from "@material-ui/icons/ViewStreamOutlined";
 import AppsIcon from "@material-ui/icons/Apps";
 import AccountIcon from "@material-ui/icons/AccountCircleOutlined";
 import { Button, Paper, Popper } from "@material-ui/core";
-
-
 import { Link, useHistory } from "react-router-dom";
-
-import { NotesContainer } from "../../FundooKeepComponent/FundooKeep";
-
 import CloseIcon from "@material-ui/icons/Close";
 import "../Dashboard/DashBoard.css";
+import UserService from "../../../services/UserService";
+const service = new UserService();
 
 const drawerWidth = 240;
 
@@ -177,7 +174,6 @@ export default function DashBoard(props) {
   const [openProfile, setProfile] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
 
-
   const handleProfile = (e) => {
     setAnchorEl(e.currentTarget);
     setProfile(!openProfile);
@@ -197,6 +193,18 @@ export default function DashBoard(props) {
   const handleNotesOpen = () => {
     setOpen(open ? false : true);
     history.push("/fundooKeep/notes");
+  };
+  const handleLogout = () => {
+    service
+      .LogOut()
+      .then((res) => {
+        console.log("logged out successfully");
+        localStorage.removeItem("token");
+        history.push("/signin");
+      })
+      .catch((err) => {
+        console.log("logout", err);
+      });
   };
 
   return (
@@ -234,15 +242,12 @@ export default function DashBoard(props) {
                 inputProps={{ "aria-label": "search" }}
               />
             </div>
-              
+
             <RefreshIcon className="ref-icon" />
             <ViewIcon className="view-icon" />
             <SettingsIcon className="setting-icon" />
             <AppsIcon className="app-icon" />
-            <AccountIcon className="app-icon" 
-            onClick={handleProfile} 
-            />
-            
+            <AccountIcon className="app-icon" onClick={handleProfile} />
           </Toolbar>
         </div>
       </AppBar>
@@ -317,16 +322,17 @@ export default function DashBoard(props) {
         anchorEl={anchorEl}
         placement="bottom"
         transition
-        style={{ zIndex: 10, right: 0, width: "200px" }}
+        style={{ zIndex: 10, right: 0, width: "200px", marginTop: "25px" }}
       >
         {
           <Paper className="logout-popper">
             <div>
-              <AccountIcon fontSize="large" className='app-icon'/>
+              <AccountIcon fontSize="large" className="app-icon" />
               <h3>Shalini Pandey</h3>
             </div>
             <Divider />
             <Button
+              onClick={handleLogout}
               style={{
                 backgroundColor: "#1976d2",
                 color: "#fff",
