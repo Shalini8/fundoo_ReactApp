@@ -220,21 +220,21 @@ const useStyles = makeStyles((theme) => ({
         console.log("logout", err);
       });
   };
- 
-  store.subscribe(() => {
-    console.log(store.getState().changeTitle);
-   let title = store.getState().changeTitle;
+  React.useEffect(()=> {
+    console.log("we are getting redux", props.changeTitle)
+    let title = props.changeTitle;
     if(title === "Notes"){
-      setTitle(title);
-    }
-    else if(title === "Archive"){
-      setTitle(title);
-    }
-    else if(title === "Trash"){
-      setTitle(title);
-    }
-  });
-  
+          setTitle(title);
+        }
+        else if(title === "Archive"){
+          setTitle(title);
+        }
+        else if(title === "Trash"){
+          setTitle(title);
+        }
+    console.log("we are getting redux222222", props.abc)
+  },[props])
+
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -382,5 +382,11 @@ const useStyles = makeStyles((theme) => ({
     </div>
   );
 }
-
-export default connect()(DashBoard);
+function mapStateToProps(state){
+  console.log(state);
+  return {
+    changeTitle: state.ChangeTitleReducer.changeTitle,
+    abc: state.abcReducer.abc
+  }
+}
+export default connect(mapStateToProps)(DashBoard);
