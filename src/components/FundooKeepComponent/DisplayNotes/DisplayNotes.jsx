@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+
 import IconButton from "../IconButton/IconButton";
 import "../DisplayNotes/DisplayNotes.css";
 import deleteImg from "./delete.svg";
@@ -37,7 +38,6 @@ export class DisplayNotes extends Component {
       collaboratorOpen: false,
       note: "",
       image: "",
-
     };
   }
 
@@ -50,7 +50,6 @@ export class DisplayNotes extends Component {
       color: val.color,
       collaborators: val.collaborators,
       note: val,
-      
     });
   };
   handleTitleChange = (e) => {
@@ -64,7 +63,6 @@ export class DisplayNotes extends Component {
       description: e.target.value,
     });
   };
-
 
   handleClose = () => {
     let data = {
@@ -83,8 +81,6 @@ export class DisplayNotes extends Component {
         console.log(err);
       });
   };
-
-
 
   handleCancel = () => {
     this.setState({
@@ -191,7 +187,7 @@ export class DisplayNotes extends Component {
       return <div></div>;
     }
   };
-    collaboratorsOnDialogBox = (collabs) => {
+  collaboratorsOnDialogBox = (collabs) => {
     if (collabs.length > 0) {
       let display = [];
       for (let i = 0; i < collabs.length; i++) {
@@ -237,15 +233,13 @@ export class DisplayNotes extends Component {
       return <div></div>;
     }
   };
-  displayImage=(imageUrl)=>{
-    if( imageUrl === "") {
-      <img src ={"http://fundoonotes.incubation.bridgelabz.com/" +imageUrl}/> 
-
-    }else{
-      <div></div>
+  displayImage = (imageUrl) => {
+    if (imageUrl === "") {
+      <img src={"http://fundoonotes.incubation.bridgelabz.com/" + imageUrl} />;
+    } else {
+      <div></div>;
     }
-    
-  }
+  };
 
   render() {
     const searchList = this.state.usersList.map((val, ind) => {
@@ -261,26 +255,20 @@ export class DisplayNotes extends Component {
         <div className="note-containerr">
           {this.props.notes.map((val, index) => (
             <div
-            
               key={index}
               className="note"
               style={{ backgroundColor: val.color }}
             >
-              <div 
-              onClick={() => {
-              this.handleClickOpen(val);
-            }}>
-              {this.displayImage(val.imageUrl)}
-
-              <h1
-                className="note-title"
-               
+              <div
+                onClick={() => {
+                  this.handleClickOpen(val);
+                }}
               >
-                {val.title}
-              </h1>
-              <p> {val.description}</p>
+                {this.displayImage(val.imageUrl)}
 
-              {this.displayCollaborator(val.collaborators)}
+                <h1 className="note-title">{val.title}</h1>
+                <p> {val.description}</p>
+                {this.displayCollaborator(val.collaborators)}
               </div>
               <div className="showicons">
                 <IconButton
@@ -290,7 +278,6 @@ export class DisplayNotes extends Component {
                   get={this.props.get}
                   note={val}
                   setImage={this.setImageUpdateNote}
-
                 />
               </div>
             </div>
@@ -350,7 +337,6 @@ export class DisplayNotes extends Component {
                   get={this.props.get}
                   note={this.state.note}
                   setImage={this.setImageUpdateNote}
-
                 />
               </div>
               <Button onClick={this.handleClose}>Close</Button>

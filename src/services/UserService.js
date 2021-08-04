@@ -61,7 +61,7 @@ class UserService {
         return axiosservice.getMethod(`${baseUrl}notes/getTrashNotesList`, config);
       };
       SearchUserList = (data) => {
-        return axiosservice.postMethod(`${baseUrl}user/searchUserList`,data,config);
+        return axiosservice.postMethod(`${baseUrl}user/searchUserList`,data, config);
       };
     
       AddCollaborator = (id, data) => {return axiosservice.postMethod(`${baseUrl}notes/${id}/AddcollaboratorsNotes`, data,config);

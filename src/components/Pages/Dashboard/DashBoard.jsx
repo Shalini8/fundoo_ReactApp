@@ -1,5 +1,9 @@
 import React from "react";
 import clsx from "clsx";
+import { connect } from "react-redux";
+import store from "../../../store/store";
+import ChangeTitleReducer from "../../../reducers/ChangeTitle.Reducer";
+
 import { fade, makeStyles, useTheme } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import AppBar from "@material-ui/core/AppBar";
@@ -35,6 +39,7 @@ import Archive from "../../FundooKeepComponent/Archive/Archive";
 import Trash from "../../FundooKeepComponent/Trash/Trash";
 import UserService from "../../../services/UserService";
 const service = new UserService();
+
 
 const drawerWidth = 240;
 
@@ -169,13 +174,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function DashBoard(props) {
+ function DashBoard(props) {
   const classes = useStyles();
   const theme = useTheme();
   const history = useHistory();
   const [open, setOpen] = React.useState(false);
+  const [pageTitle, setTitle] = React.useState("Keep");
   const [openProfile, setProfile] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
+
+
 
   const handleProfile = (e) => {
     setAnchorEl(e.currentTarget);
@@ -187,14 +195,17 @@ export default function DashBoard(props) {
   };
   const handleTrashOpen = () => {
     setOpen(open ? false : true);
+    props.dispatch({ type: "Trash" });
     history.push("/fundooKeep/trash");
   };
   const handleArchiveOpen = () => {
     setOpen(open ? false : true);
-    history.push("/fundooKeep/archive");
+    props.dispatch({ type: "Archive" });
+   history.push("/fundooKeep/archive");
   };
   const handleNotesOpen = () => {
     setOpen(open ? false : true);
+    props.dispatch({ type: "Notes" });
     history.push("/fundooKeep/notes");
   };
   const handleLogout = () => {
@@ -209,7 +220,21 @@ export default function DashBoard(props) {
         console.log("logout", err);
       });
   };
-
+ 
+  store.subscribe(() => {
+    console.log(store.getState().changeTitle);
+   let title = store.getState().changeTitle;
+    if(title === "Notes"){
+      setTitle(title);
+    }
+    else if(title === "Archive"){
+      setTitle(title);
+    }
+    else if(title === "Trash"){
+      setTitle(title);
+    }
+  });
+  
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -228,7 +253,7 @@ export default function DashBoard(props) {
             <Typography className={classes.title} variant="h6" Wrap>
               <div className={classes.keepIcon}>
                 <img src={KeepIcon} alt="keep-icon" className="keep-img" />
-                <p className="keep-wrd">Keep</p>
+                <p className="keep-wrd">{pageTitle}</p>
               </div>
             </Typography>
             <div className={classes.search}>
@@ -357,3 +382,5 @@ export default function DashBoard(props) {
     </div>
   );
 }
+
+export default connect()(DashBoard);
