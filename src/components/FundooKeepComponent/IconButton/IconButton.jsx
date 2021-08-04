@@ -10,6 +10,7 @@ import Fade from "@material-ui/core/Fade";
 import Paper from "@material-ui/core/Paper";
 import Popper from "@material-ui/core/Popper";
 import UserService from "../../../services/UserService";
+import { BorderStyle } from "@material-ui/icons";
 const service = new UserService();
 
 export class IconButton extends Component {
@@ -20,6 +21,7 @@ export class IconButton extends Component {
       openOptions: false,
       open: false,
       anchorEl: null,
+      image: null,
     };
   }
   handleClick = (e) => {
@@ -34,7 +36,7 @@ export class IconButton extends Component {
     this.setState({
       openOptions: !this.state.openOptions,
       anchorEl: e.currentTarget,
-      open:false
+      open: false,
     });
   };
 
@@ -106,25 +108,33 @@ export class IconButton extends Component {
       this.props.handleCollaborator(this.props.note);
     }
   };
+  handleImage = (e) => {
+    if (this.props.noteString === "create") {
+      console.log(e.target.files[0]);
+      this.props.setImage(e.target.files[0]);
+    } else {
+      this.props.setImage(e);
+    }
+  };
 
   render() {
     const colorbtn = [
-      { title: "Default", name: "#ffffff" },
-      { title: "Red", name: "#f28b82" },
-      { title: "Orange", name: "#fbbc04" },
-      { title: "Yellow", name: "#fff475" },
-      { title: "Green", name: "#ccff90" },
-      { title: "Teal", name: "#a7ffeb" },
-      { title: "Blue", name: "#cbf0f8" },
-      { title: "Darkblue", name: "#aecbfa" },
-      { title: "Purple", name: "#d7aefb" },
-      { title: "Pink", name: "#fdcfe8" },
-      { title: "Brown", name: "#e6c9a8" },
-      { title: "Grey", name: "#e8eaed" },
+      { title: "Default", name: "#ffffff", bgColor: "#a0a0a0" },
+      { title: "Red", name: "#f28b82", bgColor: "#f28b82" },
+      { title: "Orange", name: "#fbbc04", bgColor: "#fbbc04" },
+      { title: "Yellow", name: "#fff475", bgColor: "#fff475" },
+      { title: "Green", name: "#ccff90", bgColor: "#ccff90" },
+      { title: "Teal", name: "#a7ffeb", bgColor: "#a7ffeb" },
+      { title: "Blue", name: "#cbf0f8", bgColor: "#cbf0f8" },
+      { title: "Darkblue", name: "#aecbfa", bgColor: "#aecbfa" },
+      { title: "Purple", name: "#d7aefb", bgColor: "#d7aefb" },
+      { title: "Pink", name: "#fdcfe8", bgColor: "#fdcfe8" },
+      { title: "Brown", name: "#e6c9a8", bgColor: "#e6c9a8" },
+      { title: "Grey", name: "#e8eaed", bgColor: "#e8eaed" },
     ];
 
     return (
-      <div>
+      <>
         <Popper
           open={this.state.open}
           anchorEl={this.state.anchorEl}
@@ -145,11 +155,14 @@ export class IconButton extends Component {
                         this.onClickChangeColor(colorbtn.name)
                       }
                       style={{
+                        margin: 1,
                         backgroundColor: colorbtn.name,
                         width: "28px",
                         height: "28px",
                         borderRadius: "15px",
-                        border: "1px solid #a0a0a0",
+                        borderWidth: "1px",
+                        borderStyle: "solid",
+                        borderColor: colorbtn.bgColor,
                       }}
                     ></button>
                   ))}
@@ -201,8 +214,20 @@ export class IconButton extends Component {
             title="Change Color"
             className="btn-icon"
             onClick={this.handleClick}
+            // onClick ={()=>{this.setState({
+            //   open:false
+            // })}}
           />
-          <PhotoIcon title="Add image" className="btn-icon" />
+          <label htmlFor="file">
+            <PhotoIcon title="Add image" className="btn-icon" />
+          </label>
+          <input
+            id="file"
+            type="file"
+            className="fileinputarea"
+            onChange={this.handleImage}
+          />
+
           <ArchiveIcon
             title="Archive"
             className="btn-icon"
@@ -214,7 +239,7 @@ export class IconButton extends Component {
             onClick={this.onClickmoreOptions}
           />
         </div>
-      </div>
+      </>
     );
   }
 }

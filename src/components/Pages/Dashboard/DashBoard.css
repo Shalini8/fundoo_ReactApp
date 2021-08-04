@@ -1,10 +1,10 @@
 .MuiAppBar-colorPrimary {
   color: black;
-  background-color: white;
+  /* background-color: white; */
 }
 
 .custom-drawr .MuiDrawer-paper {
-  top: 70px;
+  top: 50px;
 }
 .MuiDrawer-paperAnchorDockedLeft {
   border-right: none !important;
@@ -53,7 +53,12 @@
   border-radius: 10px !important;
 }
 .keep-wrd {
+  margin: 0;
+  padding: 0;
   color: #000;
+}
+.keep-img{
+  height: 30px;
 }
 .card-container {
   display: flex;
@@ -91,9 +96,9 @@ EditIcon {
 
 
 @media only screen and (max-width: 980px) {
-  .custom-drawr .MuiDrawer-paper {
+  /* .custom-drawr .MuiDrawer-paper {
     top: 50px;
-  }
+  } */
 }
 
 .title {
@@ -113,6 +118,7 @@ EditIcon {
   font-size: 18px;
   outline: none;
 }
+
 .logout-popper {
   padding: 40px 30px;
   text-align: center;
@@ -127,7 +133,7 @@ EditIcon {
 @media only screen and (max-width :500px){
     .MuiCard-root{
         width: 240px;
-        /* margin: 50px; */
+        margin: 50px;
     } 
     
     

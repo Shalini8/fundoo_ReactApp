@@ -30,6 +30,9 @@ import { Button, Paper, Popper } from "@material-ui/core";
 import { Link, useHistory } from "react-router-dom";
 import CloseIcon from "@material-ui/icons/Close";
 import "../Dashboard/DashBoard.css";
+import ProtectedRouter from "../../FundooKeepComponent/ProtectedRoute/ProtectedRoute";
+import Archive from "../../FundooKeepComponent/Archive/Archive";
+import Trash from "../../FundooKeepComponent/Trash/Trash";
 import UserService from "../../../services/UserService";
 const service = new UserService();
 
@@ -224,7 +227,7 @@ export default function DashBoard(props) {
             </IconButton>
             <Typography className={classes.title} variant="h6" Wrap>
               <div className={classes.keepIcon}>
-                <img src={KeepIcon} alt="keep-icon" />
+                <img src={KeepIcon} alt="keep-icon" className="keep-img" />
                 <p className="keep-wrd">Keep</p>
               </div>
             </Typography>
@@ -315,7 +318,11 @@ export default function DashBoard(props) {
         </List>
         <Divider />
       </Drawer>
-      <div className="note-component">{props.children}</div>
+
+      <div className="note-component">
+        {props.children}
+      
+      </div>
       <Popper
         name="more"
         open={openProfile}
@@ -329,6 +336,7 @@ export default function DashBoard(props) {
             <div>
               <AccountIcon fontSize="large" className="app-icon" />
               <h3>Shalini Pandey</h3>
+              <span>shalu8mar@gmail.com</span>
             </div>
             <Divider />
             <Button

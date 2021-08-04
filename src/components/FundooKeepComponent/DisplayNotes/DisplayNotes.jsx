@@ -35,6 +35,9 @@ export class DisplayNotes extends Component {
       openPopper: false,
       collaborators: [],
       collaboratorOpen: false,
+      note: "",
+      image: "",
+
     };
   }
 
@@ -45,8 +48,9 @@ export class DisplayNotes extends Component {
       description: val.description,
       id: val.id,
       color: val.color,
-      noteID: val.id,
       collaborators: val.collaborators,
+      note: val,
+      
     });
   };
   handleTitleChange = (e) => {
@@ -60,6 +64,8 @@ export class DisplayNotes extends Component {
       description: e.target.value,
     });
   };
+
+
   handleClose = () => {
     let data = {
       noteId: this.state.id,
@@ -77,6 +83,9 @@ export class DisplayNotes extends Component {
         console.log(err);
       });
   };
+
+
+
   handleCancel = () => {
     this.setState({
       collaboratorOpen: false,
@@ -117,7 +126,10 @@ export class DisplayNotes extends Component {
     service
       .AddCollaborator(this.state.id, data)
       .then((res) => {
-        this.handleSave();
+        console.log(res);
+        this.setState({
+          openPopper: false,
+        });
       })
       .catch((err) => {
         console.log("collab", err);
@@ -142,6 +154,9 @@ export class DisplayNotes extends Component {
       .catch((err) => {
         console.log(err);
       });
+  };
+  setImageUpdateNote = (content) => {
+    this.setState({ image: content });
   };
 
   displayCollaborator = (collaborators) => {
@@ -176,13 +191,13 @@ export class DisplayNotes extends Component {
       return <div></div>;
     }
   };
-  collabsOnCollabBox = (collabs) => {
+    collaboratorsOnDialogBox = (collabs) => {
     if (collabs.length > 0) {
-      let dis = [];
+      let display = [];
       for (let i = 0; i < collabs.length; i++) {
         let firstLetter = collabs[i].firstName.charAt(0).toUpperCase();
 
-        dis.push(
+        display.push(
           <div className="collabs-list" key={i}>
             <div className="first">
               <span
@@ -217,11 +232,20 @@ export class DisplayNotes extends Component {
           </div>
         );
       }
-      return <div>{dis}</div>;
+      return <div>{display}</div>;
     } else {
       return <div></div>;
     }
   };
+  displayImage=(imageUrl)=>{
+    if( imageUrl === "") {
+      <img src ={"http://fundoonotes.incubation.bridgelabz.com/" +imageUrl}/> 
+
+    }else{
+      <div></div>
+    }
+    
+  }
 
   render() {
     const searchList = this.state.usersList.map((val, ind) => {
@@ -237,29 +261,36 @@ export class DisplayNotes extends Component {
         <div className="note-containerr">
           {this.props.notes.map((val, index) => (
             <div
+            
               key={index}
               className="note"
               style={{ backgroundColor: val.color }}
             >
+              <div 
+              onClick={() => {
+              this.handleClickOpen(val);
+            }}>
+              {this.displayImage(val.imageUrl)}
+
               <h1
                 className="note-title"
-                onClick={() => {
-                  this.handleClickOpen(val);
-                }}
+               
               >
                 {val.title}
               </h1>
               <p> {val.description}</p>
 
               {this.displayCollaborator(val.collaborators)}
+              </div>
               <div className="showicons">
                 <IconButton
-                  className="s-icons"
                   handleCollaborator={this.handleCollaborator}
                   collabOpen={this.state.collaboratorOpen}
                   notestring="update"
-                  note={val}
                   get={this.props.get}
+                  note={val}
+                  setImage={this.setImageUpdateNote}
+
                 />
               </div>
             </div>
@@ -313,8 +344,13 @@ export class DisplayNotes extends Component {
             <div className="icon-close">
               <div className="icon-btn">
                 <IconButton
-                  // note={val}
+                  notestring="update"
+                  handleCollaborator={this.handleCollaborator}
+                  collabOpen={this.state.collaboratorOpen}
                   get={this.props.get}
+                  note={this.state.note}
+                  setImage={this.setImageUpdateNote}
+
                 />
               </div>
               <Button onClick={this.handleClose}>Close</Button>
@@ -344,7 +380,7 @@ export class DisplayNotes extends Component {
                 </div>
               </div>
               <div className="first">
-                {this.collabsOnCollabBox(this.state.collaborators)}
+                {this.collaboratorsOnDialogBox(this.state.collaborators)}
               </div>
             </div>
 

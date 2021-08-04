@@ -44,8 +44,11 @@ export default class CreateNote extends React.Component {
       openPopper: false,
       collabOpen: false,
       usersList: [],
+      image: "",
     };
   }
+  
+
   changeHandler = (e) => {
     this.setState({
       [e.target.name]: e.target.value,
@@ -72,6 +75,9 @@ export default class CreateNote extends React.Component {
     }
     if (this.state.isDeleted !== "") {
       data.append("isDeleted", this.state.isDeleted);
+    }
+    if (this.state.image !== "") {
+      data.append("file", this.state.image);
     }
     if (collab !== "") {
       data.append("collaberators", JSON.stringify([collab]));
@@ -100,6 +106,14 @@ export default class CreateNote extends React.Component {
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  setImage = (file) => {
+    console.log("creatteeeeeee")
+    console.log(file.name);
+    this.setState({
+      image: file.name,
+    });
   };
 
   create = (color) => {
@@ -178,11 +192,11 @@ export default class CreateNote extends React.Component {
   render() {
     return (
       <div className="card-container">
-        <div
+        <div 
           onClick={this.handleOnClick}
           style={{
             display: this.state.showContent ? "none" : "flex",
-            width: "100%",
+            // width: "100%",
             justifyContent: "center",
           }}
         >
@@ -206,7 +220,7 @@ export default class CreateNote extends React.Component {
         <div
           style={{
             display: this.state.showContent ? "flex" : "none",
-            width: "100%",
+            // width: "100%",
             justifyContent: "center",
             backgroundColor: this.props.notes.color,
           }}
@@ -255,6 +269,7 @@ export default class CreateNote extends React.Component {
                   archive={this.handleArchive}
                   delete={this.handleDelete}
                   collab={this.collaboratorDialog}
+                  setImage={this.setImage}
                 />
               </div>
               <Button

@@ -2,6 +2,7 @@
    padding: 10px;
     width: 300px;
     /* width: fit-content; */
+    max-height: 100vh;
     height: fit-content;
     margin-top: 50px;
     border: 1px solid #ccc;
@@ -28,14 +29,16 @@
     flex-wrap: wrap;
     justify-content: space-between;
     margin: 0 20px;
+    margin-top: 60px;
 
 }
 .showicons{
-    display: none;
+    display: flex;
+    visibility: hidden;
     width: 100%;
 }
 .note:hover >.showicons{
-    display: block;
+    visibility: visible;
  }
 .icon-close{
     display: flex;
@@ -43,7 +46,7 @@
 }
 .icon-btn{
     width: 240px;
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 .dianote-title,.dianote-desc:focus-visible{
     border: none;
@@ -93,9 +96,9 @@
     border-radius: 100%;
     margin-right: 20px;
 }
-/* .dialog-box{
+.dialog-box{
     width: 100%;
-} */
+}
 
 .owner-icon {
     margin-top: 4px;
@@ -260,6 +263,9 @@
     }
     .remove-btn{
         margin-left: 10px;
+    }
+    .note-containerr{
+        margin: 0;
     }
 
 }

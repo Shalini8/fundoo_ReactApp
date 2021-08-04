@@ -65,6 +65,7 @@
 }
 @media only screen and (max-width :500px){
     .takenote{
+        width: 320px;
         flex-direction: column;
     }
 }
