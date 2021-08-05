@@ -131,10 +131,17 @@ EditIcon {
 -moz-box-shadow: 20px 12px 52px -20px rgba(0,0,0,0.52);
 } */
 @media only screen and (max-width :500px){
+
     .MuiCard-root{
-        width: 240px;
+        width: 270px;
         margin: 50px;
     } 
+    /* .search-bar{
+      display: none !important;
+    } */
+    .view-icon{
+     display: none !important;
+    }
     
     
 }

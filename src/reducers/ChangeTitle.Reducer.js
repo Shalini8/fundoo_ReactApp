@@ -1,5 +1,5 @@
 const initialState = {
-    changeTitle: "",
+    changeTitle: "Keep",
   };
   
   function ChangeTitleReducer(state = initialState, action) {

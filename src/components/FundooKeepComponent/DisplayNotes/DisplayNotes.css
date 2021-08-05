@@ -150,10 +150,7 @@
 
 
 @media only screen and (max-width:1110px) {
-    .displaynotes {
-        padding: 6%;
-        padding-top: 0;
-    }
+   
 
     .note-div {
         width: 245px;
@@ -164,11 +161,6 @@
 
     .card-content {
         padding: 0;
-    }
-
-    .displaynotes {
-        padding: 5%;
-        padding-top: 0;
     }
 
     .note-div {
@@ -216,6 +208,14 @@
     }
     .remove-btn{
         margin-left: 200px;
+    }
+    .note-containerr{
+        margin-top: 0px; 
+
+    }
+    .takenote{
+        width: 350px;
+        flex-direction: column;
     }
 }
 @media only screen and (max-width:599px) {

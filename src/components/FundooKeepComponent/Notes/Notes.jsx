@@ -21,7 +21,6 @@ class Notes extends Component {
   componentDidMount() {
     this.getANote();
   }
-  
 
   getANote = () => {
     service
@@ -68,8 +67,6 @@ class Notes extends Component {
 function mapStateToProps(state) {
   console.log(state);
   return {
-    changeTitle: state.ChangeTitleReducer.changeTitle,
-    abc: state.abcReducer.abc,
     searchData: state.searchBarReducer.searchData,
   };
 }

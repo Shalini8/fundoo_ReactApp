@@ -65,7 +65,14 @@
 }
 @media only screen and (max-width :500px){
     .takenote{
-        width: 320px;
+        width: 100%;
+        /* width: 320px; */
+        flex-direction: column;
+    }
+}
+@media only screen and (max-width :540px){
+    .takenote{
+        width: 100% !important;
         flex-direction: column;
     }
 }

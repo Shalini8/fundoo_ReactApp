@@ -37,7 +37,6 @@ import Trash from "../../FundooKeepComponent/Trash/Trash";
 import UserService from "../../../services/UserService";
 const service = new UserService();
 
-
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -171,18 +170,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
- function DashBoard(props) {
+function DashBoard(props) {
   const classes = useStyles();
   const theme = useTheme();
   const history = useHistory();
   const [open, setOpen] = React.useState(false);
   const [pageTitle, setTitle] = React.useState("Keep");
   const [openProfile, setProfile] = React.useState(false);
-  const [searchinput, setSearchinput] = React.useState("");
 
   const [anchorEl, setAnchorEl] = React.useState(null);
-
-
 
   const handleProfile = (e) => {
     setAnchorEl(e.currentTarget);
@@ -193,8 +189,6 @@ const useStyles = makeStyles((theme) => ({
     setOpen(open ? false : true);
   };
 
- 
-
   const handleTrashOpen = () => {
     setOpen(open ? false : true);
     props.dispatch({ type: "Trash" });
@@ -203,7 +197,7 @@ const useStyles = makeStyles((theme) => ({
   const handleArchiveOpen = () => {
     setOpen(open ? false : true);
     props.dispatch({ type: "Archive" });
-   history.push("/fundooKeep/archive");
+    history.push("/fundooKeep/archive");
   };
   const handleNotesOpen = () => {
     setOpen(open ? false : true);
@@ -223,21 +217,17 @@ const useStyles = makeStyles((theme) => ({
       });
   };
 
-  React.useEffect(()=> {
-    console.log("we are getting redux", props.changeTitle)
+  React.useEffect(() => {
+    console.log("we are getting redux", props.changeTitle);
     let title = props.changeTitle;
     setTitle(title);
-    console.log("we are getting redux1", props.abc)
-    console.log("we are getting redux2", props.searchData)
+    // console.log("we are getting redux1", props.abc);
+    // console.log("we are getting redux2", props.searchData);
+  }, [props]);
 
-  },[props])
-
-  const onChange = (e)=>{
-    props.dispatch({type: "Search" , searchData: e.target.value}); 
-  }
-  // React.useEffect(()=> {
-
-  // },[props])
+  const onChange = (e) => {
+    props.dispatch({ type: "Search", searchData: e.target.value });
+  };
 
   return (
     <div className={classes.root}>
@@ -272,9 +262,7 @@ const useStyles = makeStyles((theme) => ({
                   input: classes.inputInput,
                 }}
                 inputProps={{ "aria-label": "search" }}
-                onChange = {onChange}
-                // onChange={event =>{setSearchinput(event.target.value)
-                // console.log(event.target.value)}}
+                onChange={onChange}
               />
             </div>
 
@@ -351,10 +339,7 @@ const useStyles = makeStyles((theme) => ({
         <Divider />
       </Drawer>
 
-      <div className="note-component">
-        {props.children}
-      
-      </div>
+      <div className="note-component">{props.children}</div>
       <Popper
         name="more"
         open={openProfile}
@@ -389,13 +374,12 @@ const useStyles = makeStyles((theme) => ({
     </div>
   );
 }
-function mapStateToProps(state){
+function mapStateToProps(state) {
   console.log(state);
   return {
     changeTitle: state.ChangeTitleReducer.changeTitle,
     abc: state.abcReducer.abc,
-    searchData:state.searchBarReducer.searchData
-    
-  }
+    searchData: state.searchBarReducer.searchData,
+  };
 }
 export default connect(mapStateToProps)(DashBoard);
