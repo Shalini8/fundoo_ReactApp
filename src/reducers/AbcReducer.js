@@ -1,5 +1,5 @@
 const initialState = {
-    abc :"hello i sm shalzz "
+    abc :" "
 }
   
   function abcReducer(state = initialState, action) {

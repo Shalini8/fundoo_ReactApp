@@ -1,9 +1,6 @@
 import React from "react";
 import clsx from "clsx";
 import { connect } from "react-redux";
-import store from "../../../store/store";
-import ChangeTitleReducer from "../../../reducers/ChangeTitle.Reducer";
-
 import { fade, makeStyles, useTheme } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import AppBar from "@material-ui/core/AppBar";
@@ -181,6 +178,8 @@ const useStyles = makeStyles((theme) => ({
   const [open, setOpen] = React.useState(false);
   const [pageTitle, setTitle] = React.useState("Keep");
   const [openProfile, setProfile] = React.useState(false);
+  const [searchinput, setSearchinput] = React.useState("");
+
   const [anchorEl, setAnchorEl] = React.useState(null);
 
 
@@ -193,6 +192,9 @@ const useStyles = makeStyles((theme) => ({
   const handleDrawerOpen = () => {
     setOpen(open ? false : true);
   };
+
+ 
+
   const handleTrashOpen = () => {
     setOpen(open ? false : true);
     props.dispatch({ type: "Trash" });
@@ -220,20 +222,22 @@ const useStyles = makeStyles((theme) => ({
         console.log("logout", err);
       });
   };
+
   React.useEffect(()=> {
     console.log("we are getting redux", props.changeTitle)
     let title = props.changeTitle;
-    if(title === "Notes"){
-          setTitle(title);
-        }
-        else if(title === "Archive"){
-          setTitle(title);
-        }
-        else if(title === "Trash"){
-          setTitle(title);
-        }
-    console.log("we are getting redux222222", props.abc)
+    setTitle(title);
+    console.log("we are getting redux1", props.abc)
+    console.log("we are getting redux2", props.searchData)
+
   },[props])
+
+  const onChange = (e)=>{
+    props.dispatch({type: "Search" , searchData: e.target.value}); 
+  }
+  // React.useEffect(()=> {
+
+  // },[props])
 
   return (
     <div className={classes.root}>
@@ -268,6 +272,9 @@ const useStyles = makeStyles((theme) => ({
                   input: classes.inputInput,
                 }}
                 inputProps={{ "aria-label": "search" }}
+                onChange = {onChange}
+                // onChange={event =>{setSearchinput(event.target.value)
+                // console.log(event.target.value)}}
               />
             </div>
 
@@ -386,7 +393,9 @@ function mapStateToProps(state){
   console.log(state);
   return {
     changeTitle: state.ChangeTitleReducer.changeTitle,
-    abc: state.abcReducer.abc
+    abc: state.abcReducer.abc,
+    searchData:state.searchBarReducer.searchData
+    
   }
 }
 export default connect(mapStateToProps)(DashBoard);

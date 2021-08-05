@@ -1,15 +1,15 @@
-import  React, {Component} from "react";
-import CreateNote from "../CreateNote/CreateNote"
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import CreateNote from "../CreateNote/CreateNote";
 import DisplayNotes from "../DisplayNotes/DisplayNotes";
 import UserService from "../../../services/UserService";
-
 import { BrowserRouter as Router, Redirect } from "react-router-dom";
 import { Route, Switch, useHistory } from "react-router";
 import ProtectedRouter from "../ProtectedRoute/ProtectedRoute";
 
 const service = new UserService();
 
-export default class Notes extends Component {
+class Notes extends Component {
   constructor(props) {
     super(props);
 
@@ -21,6 +21,7 @@ export default class Notes extends Component {
   componentDidMount() {
     this.getANote();
   }
+  
 
   getANote = () => {
     service
@@ -40,12 +41,36 @@ export default class Notes extends Component {
   };
 
   render() {
+    let filteredNotes = this.state.notes;
+    if (this.props.searchData) {
+      filteredNotes = this.state.notes.filter((i) =>
+        i.title.toLowerCase().includes(this.props.searchData.toLowerCase())
+      );
+    }
     return (
-        <>
+      <>
         <CreateNote get={this.getANote} notes={this.state.notes} />
-        <ProtectedRouter exact path="/fundooKeep/notes" component={props => <DisplayNotes {...props} notes={this.state.notes} get={this.getANote} />}></ProtectedRouter>
-        </>
+        <ProtectedRouter
+          exact
+          path="/fundooKeep/notes"
+          component={(props) => (
+            <DisplayNotes
+              {...props}
+              notes={filteredNotes}
+              get={this.getANote}
+            />
+          )}
+        ></ProtectedRouter>
+      </>
     );
-
   }
 }
+function mapStateToProps(state) {
+  console.log(state);
+  return {
+    changeTitle: state.ChangeTitleReducer.changeTitle,
+    abc: state.abcReducer.abc,
+    searchData: state.searchBarReducer.searchData,
+  };
+}
+export default connect(mapStateToProps)(Notes);
